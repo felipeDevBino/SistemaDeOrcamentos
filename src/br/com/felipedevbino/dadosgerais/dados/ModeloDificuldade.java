@@ -19,24 +19,18 @@ public class ModeloDificuldade {
 		dificuldades.put(instancia, dificuldade);
 	}
 
-	public boolean deletarDificuldade(Object instancia, String dadoParaRemocao) {
-		if (dificuldades.containsKey(instancia)) {
-			dificuldades.remove(instancia);
-			return true;
+	public void deletarDificuldade(Object instancia, String dadoParaRemocao) {
+		if (dificuldades.containsKey(dadoParaRemocao)) {
+			dificuldades.remove(dadoParaRemocao);
 		}
-		return false;
 	}
 
-	public boolean modificarDificuldade(Object instancia, String novaDificuldade) {
-		if (modelo.modificar(instancia, novaDificuldade, dificuldades)) {
-			dificuldades = modelo.getHashMapObject();
-			return true;
-		}
-		return false;
+	public void modificarDificuldade(Object instancia, String novaDificuldade) {
+		modelo.modificar(instancia, novaDificuldade, dificuldades);
 	}
 
 	public Map<Object, String> getDificuldades() {
 		return dificuldades;
 	}
-	
+
 }

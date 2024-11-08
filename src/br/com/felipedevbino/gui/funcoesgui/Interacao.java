@@ -21,12 +21,9 @@ public class Interacao {
 		tipo(mensagem, "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public void mostrarMensagemDeQuestao(String mensagem) {
-		tipo(mensagem, "?", JOptionPane.QUESTION_MESSAGE);
-	}
-
-	public void mostrarMensagemDeErro(String mensagem) {
+	public String mostrarMensagemDeErro(String mensagem) {
 		tipo(mensagem, "ERRO", JOptionPane.ERROR_MESSAGE);
+		return mensagem;
 	}
 	
 	public String inserirDadoDeTexto(String mensagem) {

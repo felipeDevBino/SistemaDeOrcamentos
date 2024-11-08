@@ -19,24 +19,16 @@ public class ModeloEmpecilhos {
 		empecilhos.put(empecilho, custo);
 	}
 
-	public boolean deletarEmpecilho(String empecilho) {
-		if (modelo.remover(empecilho, null, empecilhos)) {
-			empecilhos = modelo.getHashMapDouble();
-			return true;
-		}
-		return false;
+	public void deletarEmpecilho(String empecilho) {
+		modelo.remover(empecilho, null, empecilhos);
 	}
 
-	public boolean renomearEmpecilho(String novoEmpecilho, String empecilho) {
-		if (modelo.renomear(novoEmpecilho, empecilho, null, empecilhos)) {
-			empecilhos = modelo.getHashMapDouble();
-			return true;
-		}
-		return false;
+	public void renomearEmpecilho(String novoEmpecilho, String empecilho) {
+		modelo.renomear(novoEmpecilho, empecilho, null, empecilhos);
 	}
 
 	public Map<String, Double> getEmpecilhos() {
 		return empecilhos;
 	}
-	
+
 }
