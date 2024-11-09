@@ -8,18 +8,40 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import br.com.felipedevbino.gui.funcoesgui.Interacao;
+import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
+import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
+import br.com.felipedevbino.logicaexecucao.logicadados.etapas.AdicionarEtapa;
+import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
+import br.com.felipedevbino.logicaexecucao.logicadados.materiais.AdicionarMaterial;
+import br.com.felipedevbino.logicaexecucao.logicadados.materiais.BuscarMaterial;
+import br.com.felipedevbino.logicaexecucao.logicadados.partes.AdicionarParte;
+import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
+
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SistemaDeOrcamentos {
 
 	private JFrame frame;
+	private Interacao interacao;
+	private BuscarEtapa buscarEtapas;
+	private BuscarParte buscarPartes;
+	private BuscarEmpecilho buscarEmpecilho;
+	private BuscarMaterial buscarMateriais;
+	private AdicionarEtapa adicionarEtapa;
+	private AdicionarParte adicionarParte;
+	private AdicionarEmpecilho adicionarEmpecilho;
+	private AdicionarMaterial adicionarMateriais;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
-		//Nimbus LookAndFeel
+
+		// Nimbus LookAndFeel
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -36,11 +58,12 @@ public class SistemaDeOrcamentos {
 		} catch (javax.swing.UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					SistemaDeOrcamentos window = new SistemaDeOrcamentos();
+					window.frame.setResizable(false);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,10 +79,25 @@ public class SistemaDeOrcamentos {
 		initialize();
 	}
 
+	private void inicializarInstancias() {
+		interacao = new Interacao();
+		buscarEtapas = new BuscarEtapa();
+		buscarPartes = new BuscarParte();
+		buscarEmpecilho = new BuscarEmpecilho();
+		buscarMateriais = new BuscarMaterial();
+		adicionarEtapa = new AdicionarEtapa();
+		adicionarParte = new AdicionarParte();
+		adicionarEmpecilho = new AdicionarEmpecilho();
+		adicionarMateriais = new AdicionarMaterial();
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		inicializarInstancias();
+
 		frame = new JFrame();
 		frame.setName("Sistema de Orçamentos");
 		frame.setBounds(100, 100, 1213, 746);
@@ -67,7 +105,7 @@ public class SistemaDeOrcamentos {
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		
+
 		panel.setBounds(0, 0, 1207, 707);
 		panel.setBackground(new Color(135, 135, 135));
 		frame.getContentPane().add(panel);
@@ -83,13 +121,13 @@ public class SistemaDeOrcamentos {
 		telaInterativa.setBounds(303, 78, 588, 337);
 		panel.add(telaInterativa);
 
-		JButton botaoAtualizar = new JButton("ATUALIZAR");
+		JButton botaoAtualizar = new JButton("ATUALIZAR");	
 		botaoAtualizar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoAtualizar.setBounds(303, 426, 588, 41);
 		panel.add(botaoAtualizar);
 
-		JLabel infoAutor = new JLabel("@felipeDevBino / felipereisbino@gmail.com / 41998738614");
-		infoAutor.setBounds(900, 682, 287, 14);
+		JLabel infoAutor = new JLabel("@felipeDevBino / felipereisbino@gmail.com / (41) 998744825");
+		infoAutor.setBounds(851, 682, 346, 14);
 		infoAutor.setForeground(Color.WHITE);
 		panel.add(infoAutor);
 
@@ -125,69 +163,91 @@ public class SistemaDeOrcamentos {
 		botaoSalvar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoSalvar.setBounds(32, 461, 244, 65);
 		panel.add(botaoSalvar);
-		
+
 		JLabel iconeOrcamentos = new JLabel("");
 		iconeOrcamentos.setBounds(926, 11, 237, 47);
 		panel.add(iconeOrcamentos);
-		
+
 		JButton botaoEstimativa = new JButton("ESTIMATIVA");
 		botaoEstimativa.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoEstimativa.setBounds(32, 385, 244, 65);
 		panel.add(botaoEstimativa);
-		
+
 		JButton botaoAddMateriais = new JButton("ADICIONAR MATERIAIS");
+		botaoAddMateriais.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				adicionarMateriais.adicionarMaterialAoOrcamento();
+				buscarMateriais.buscarMaterial();
+			}
+		});
 		botaoAddMateriais.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoAddMateriais.setBounds(32, 308, 244, 65);
 		panel.add(botaoAddMateriais);
-		
+
 		JButton botaoAddEmpecilho = new JButton("ADICIONAR EMPECILHO");
+		botaoAddEmpecilho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
+				buscarEmpecilho.buscarEmpecilho();
+			}
+		});
 		botaoAddEmpecilho.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoAddEmpecilho.setBounds(32, 232, 244, 65);
 		panel.add(botaoAddEmpecilho);
-		
+
 		JButton botaoAddParte = new JButton("ADICIONAR PARTE");
+		botaoAddParte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				adicionarParte.adicionarParteAQualquerEtapa();
+			}
+		});
 		botaoAddParte.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoAddParte.setBounds(32, 156, 244, 65);
 		panel.add(botaoAddParte);
-		
+
 		JButton botaoAddEtapa = new JButton("ADICIONAR ETAPA");
+		botaoAddEtapa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				adicionarEtapa.adicionarEtapaAoOrcamento();
+			}
+		});
 		botaoAddEtapa.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoAddEtapa.setBounds(32, 80, 244, 65);
 		panel.add(botaoAddEtapa);
-		
+
 		JButton botaoEstilo = new JButton("ESTILO DE FORMATAÇÃO");
 		botaoEstilo.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		botaoEstilo.setBounds(926, 366, 244, 65);
 		panel.add(botaoEstilo);
-		
+
 		JButton botaoEmitirArquivo = new JButton("EMITIR ARQUIVO");
 		botaoEmitirArquivo.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoEmitirArquivo.setBounds(926, 270, 244, 65);
 		panel.add(botaoEmitirArquivo);
-		
+
 		JButton botaoResetar = new JButton("RESETAR ORÇAMENTO");
 		botaoResetar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoResetar.setBounds(926, 177, 244, 65);
 		panel.add(botaoResetar);
-		
+
 		JButton botaoMudarNomeArq = new JButton("MUDAR NOME DO ARQUIVO");
 		botaoMudarNomeArq.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		botaoMudarNomeArq.setBounds(926, 80, 244, 65);
 		panel.add(botaoMudarNomeArq);
-		
+
 		JButton botaoProgresso = new JButton("MOSTRAR PROGRESSO");
 		botaoProgresso.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		botaoProgresso.setBounds(926, 463, 244, 65);
 		panel.add(botaoProgresso);
-		
+
 		JLabel informacoes = new JLabel("");
 		informacoes.setBounds(303, 553, 588, 98);
 		panel.add(informacoes);
-				
+
 		ImageIcon icon = new ImageIcon(SistemaDeOrcamentos.class.getResource("/resources/background.png"));
 		JLabel planoDeFundo = new JLabel(icon);
 		planoDeFundo.setBounds(-19, 0, 1226, 707);
 		panel.add(planoDeFundo);
-		
+
 	}
 }

@@ -1,41 +1,33 @@
 package br.com.felipedevbino.dadosgerais.dados;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import br.com.felipedevbino.dadosgerais.ModeloParaDados;
 
 public class ModeloMateriais {
 
-	public List<String> materiais;
+	public Map<String, Double> materiais;
 	private ModeloParaDados modelo;
 
 	public ModeloMateriais() {
-		materiais = new ArrayList<String>();
+		materiais = new HashMap<String, Double>();
 		modelo = new ModeloParaDados();
 	}
 
-	public void inserirMaterial(String material) {
-		materiais.add(material);
+	public void inserirMaterial(String material, Double valor) {
+		materiais.put(material, valor);
 	}
 
-	public boolean deletarMaterial(String material) {
-		if (modelo.remover(material, materiais)) {
-			materiais = modelo.getArrayStr();
-			return true;
-		}
-		return false;
+	public void deletarMaterial(String material) {
+		modelo.remover(material, null, materiais);
 	}
 
-	public boolean renomearMaterial(String novoNomeMaterial, String material) {
-		if (modelo.renomear(novoNomeMaterial, material, materiais)) {
-			materiais = modelo.getArrayStr();
-			return true;
-		}
-		return false;
+	public void renomearMaterial(String novoNomeMaterial, String material) {
+		modelo.renomear(novoNomeMaterial, material, null, materiais);
 	}
 
-	public List<String> getMateriais() {
+	public Map<String, Double> getMateriais() {
 		return materiais;
 	}
 	

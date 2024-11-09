@@ -1,41 +1,34 @@
 package br.com.felipedevbino.dadosgerais.dados;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import br.com.felipedevbino.dadosgerais.ModeloParaDados;
 
 public class ModeloPartes {
 
-	public List<String> partes;
+	public Map<String, Double> partes;
 	private ModeloParaDados modelo;
 
 	public ModeloPartes() {
-		partes = new ArrayList<String>();
+		partes = new HashMap<String, Double>();
 		modelo = new ModeloParaDados();
 	}
 
-	public void inserirParte(String parte) {
-		partes.add(parte);
+	public void inserirParte(String parte, Double valor) {
+		partes.put(parte, valor);
 	}
 
-	public boolean deletarParte(String parte) {
-		if (modelo.remover(parte, partes)) {
-			partes = modelo.getArrayStr();
-			return true;
-		}
-		return false;
+	public void deletarParte(String parte) {
+		modelo.remover(parte, null, partes);	
 	}
 
-	public boolean renomearParte(String novaParte, String parte) {
-		if (modelo.renomear(novaParte, parte, partes)) {
-			partes = modelo.getArrayStr();
-			return true;
-		}
-		return false;
+	public void renomearParte(String novaParte, String parte) {
+		 modelo.renomear(novaParte, parte, null, partes);
+		
 	}
 	
-	public List<String> getPartes() {
+	public Map<String, Double> getPartes() {
 		return partes;
 	}
 
