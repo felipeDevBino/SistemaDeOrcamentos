@@ -11,7 +11,7 @@ public class ModeloEmpecilhos {
 	private ModeloParaDados modelo;
 
 	public ModeloEmpecilhos() {
-		empecilhos = new HashMap<String, Double>();
+		empecilhos = new HashMap<>();
 		modelo = new ModeloParaDados();
 	}
 
