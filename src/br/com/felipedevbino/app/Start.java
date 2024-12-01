@@ -1,5 +1,8 @@
 package br.com.felipedevbino.app;
 
+import br.com.felipedevbino.gui.SistemaDeOrcamentos;
+import br.com.felipedevbino.instancias.InstanceManager;
+
 public class Start {
 
 	/**
@@ -8,7 +11,10 @@ public class Start {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		InstanceManager.inicializaOrcamentos();
+		SistemaDeOrcamentos orcamento = InstanceManager.getSistemaDeOrcamentos();
+		SistemaDeOrcamentos.main(args);
+		//TODO
 	}
 
 }

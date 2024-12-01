@@ -1,6 +1,7 @@
 package br.com.felipedevbino.logicaexecucao.logicadados.etapas;
 
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
+import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.instancias.InstanceManager;
 import br.com.felipedevbino.logicaexecucao.logicadados.partes.AdicionarParte;
@@ -8,35 +9,71 @@ import br.com.felipedevbino.logicaexecucao.logicadados.partes.AdicionarParte;
 public class AdicionarEtapa {
 
 	private ModeloEtapas etapas = InstanceManager.getModeloEtapas();
+	private CaixaDeEscolha escolha;
 	private AdicionarParte adicionarParte;
 	private Interacao interacao;
+	private String etapa;
 	private String quantidade;
+	private int quantidadeEmInteiro;
 	private boolean adicionou;
+	private boolean seEscolheuAdicionar;
+	private boolean seEscolheuSair;
 
 	public AdicionarEtapa() {
 		adicionarParte = new AdicionarParte();
+		escolha = new CaixaDeEscolha();
 		interacao = new Interacao();
 		adicionou = false;
+		seEscolheuAdicionar = false;
+		seEscolheuSair = false;
+		etapa = "";
+		quantidadeEmInteiro = 0;
 		quantidade = "";
 	}
 
 	public void adicionarEtapaAoOrcamento() {
-		String etapa = interacao.inserirDadoDeTexto("INSIRA O NOME DA SUA ETAPA: ");
 		do {
-			String tipo = interacao
-					.inserirDadoDeTexto("VOCÊ DESEJA ADICIONAR AS PARTES DA SUA ETAPA AGORA? (SIM OU NÃO).");
+			seEscolheuSair = false;
+			seEscolheuAdicionar = false;
 
-			avaliarEscolha(etapa, tipo);
+			etapa = interacao.inserirDadoDeTexto("INSIRA O NOME DA SUA ETAPA: ");
+
+			if (seEscolheCancelarExecucao("A ETAPA ESTÁ VAZIA, DESEJA CANCELAR A EXECUÇÃO?")) {
+				break;
+			}
+			if (seAEtapaEstaVazia()) {
+				continue;
+			}
+
+			seEscolheuAdicionar = escolha.confirmarOuNegarDados("SIM", "NÃO",
+					"VOCÊ DESEJA ADICIONAR AS PARTES DA SUA ETAPA AGORA?");
+
+			avaliarEscolha();
+			if (seEscolheuSair) {
+				return;
+			}
 		} while (!adicionou);
 	}
 
-	private void avaliarEscolha(String etapa, String tipo) {
-		int quantidadeEmInteiro = 0;
+	private boolean seEscolheCancelarExecucao(String mensagem) {
+		if (etapa == null || etapa.isEmpty()) {
+			return escolha.confirmarOuNegarDados("SIM", "NÃO", mensagem);
+		}
+		return false;
+	}
 
-		if (tipo.equalsIgnoreCase("sim")) {
-			inserirQuantidadeEParte(quantidadeEmInteiro, etapa);
+	private boolean seAEtapaEstaVazia() {
+		if (etapa == null || etapa.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 
-		} else if (tipo.equalsIgnoreCase("nao") || tipo.equalsIgnoreCase("não")) {
+	private void avaliarEscolha() {
+		if (seEscolheuAdicionar) {
+			inserirQuantidadeEParte();
+
+		} else if (!seEscolheuAdicionar) {
 			etapas.inserirEtapa(etapa, null);
 			interacao.mostrarMensagemDeInformacao("ETAPA SEM PARTES ADICIONADA COM SUCESSO!");
 			adicionou = true;
@@ -47,17 +84,17 @@ public class AdicionarEtapa {
 		}
 	}
 
-	private void inserirQuantidadeEParte(int quantidadeEmInteiro, String etapa) {
+	private void inserirQuantidadeEParte() {
+		quantidadeEmInteiro = 0;
 		while (quantidadeEmInteiro <= 0) {
 			try {
 				if (seInseriuQuantidadeComSucesso()) {
-					quantidadeEmInteiro = Integer.parseInt(quantidade);
-
-					if (quantidadeEmInteiro > 0) {
-						adicionarParte.adicionarParteParaAEtapa(quantidadeEmInteiro, etapa);
-						adicionou = true;
-						break;
+					if (seEscolheuSair) {
+						return;
 					}
+					adicionarParte.adicionarParteParaAEtapa(quantidadeEmInteiro, etapa);
+					adicionou = true;
+					break;
 				}
 			} catch (NumberFormatException e) {
 				interacao.mostrarMensagemDeErro("ERRO! CARACTERE INVÁLIDO.");
@@ -67,16 +104,19 @@ public class AdicionarEtapa {
 	}
 
 	private boolean seQuantidadeEInvalida() {
-		return quantidade.equals("0") || quantidade.isEmpty() || quantidade == null;
+		return quantidade == null || quantidade.isEmpty() || quantidade.equals("0") || quantidade.equals("");
 	}
-	
+
 	private boolean seInseriuQuantidadeComSucesso() {
 		quantidade = interacao.inserirDadoDeTexto("INSIRA A QUANTIDADE DE PARTES PARA SUA ETAPA:");
 
 		if (seQuantidadeEInvalida()) {
-			interacao.mostrarMensagemDeErro("ERRO! INSIRA UMA QUANTIDADE DE PARTES VÁLIDA.");
-			return false;
+			seEscolheuSair = escolha.confirmarOuNegarDados("SIM", "NÃO",
+					"ERRO! É PRECISO INSERIR UMA QUANTIDADE DE PARTES VÁLIDA.\nDESEJA CANCELAR A EXECUÇÃO?");
+			return seEscolheuSair;
 		}
+
+		quantidadeEmInteiro = Integer.parseInt(quantidade);
 		return true;
 	}
 }

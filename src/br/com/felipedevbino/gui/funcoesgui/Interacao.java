@@ -12,7 +12,7 @@ public class Interacao {
 	private void tipo(String mensagem, String titulo, int tipo) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, tipo);
 	}
-	
+
 	private String insercao(String mensagem, int tipo) {
 		return JOptionPane.showInputDialog(null, mensagem, "INSERIR", tipo);
 	}
@@ -25,16 +25,16 @@ public class Interacao {
 		tipo(mensagem, "ERRO", JOptionPane.ERROR_MESSAGE);
 		return mensagem;
 	}
-	
+
 	public String inserirDadoDeTexto(String mensagem) {
 		return insercao(mensagem, JOptionPane.QUESTION_MESSAGE);
 	}
-	
+
 	public int inserirDadoNumericoInteiro(String mensagem) {
 		int dado = Integer.parseInt(insercao(mensagem, JOptionPane.QUESTION_MESSAGE));
 		return dado;
 	}
-	
+
 	public double inserirDadoNumericoFlutuante(String mensagem) {
 		double dado = Double.parseDouble(insercao(mensagem, JOptionPane.QUESTION_MESSAGE));
 		return dado;

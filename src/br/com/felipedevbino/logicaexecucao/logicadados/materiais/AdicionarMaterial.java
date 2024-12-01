@@ -1,5 +1,6 @@
 package br.com.felipedevbino.logicaexecucao.logicadados.materiais;
 
+import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.instancias.InstanceManager;
 import br.com.felipedevbino.dadosgerais.dados.ModeloMateriais;
@@ -7,48 +8,84 @@ import br.com.felipedevbino.dadosgerais.dados.ModeloMateriais;
 public class AdicionarMaterial {
 
 	private ModeloMateriais materiais = InstanceManager.getModeloMateriais();
+	private CaixaDeEscolha escolha;
 	private Interacao interacao;
 	private String material;
-	private Double valorMaterial;
+	private Double valor;
+	private boolean materialValido;
+	private boolean valorValido;
 
 	public AdicionarMaterial() {
 		interacao = new Interacao();
+		escolha = new CaixaDeEscolha();
 		material = "";
-		valorMaterial = 0.0;
-	}
-
-	private void inserirNomeEValorDoMaterial() {
-		material = interacao.inserirDadoDeTexto("INSIRA O NOME DO MATERIAL ");
-		valorMaterial = interacao.inserirDadoNumericoFlutuante(
-				"INSIRA O VALOR QUE O MATERIAL POSSUI AO SUBTRAIR NO ORÇAMENTO\n\nP.S: CASO NÃO HAJA GASTO, DIGITE SOMENTE 0:");
+		valor = 0.0;
+		materialValido = false;
+		valorValido = false;
 	}
 
 	public void adicionarMaterialAoOrcamento() {
-		boolean seOsDadosForamValidos;
 		do {
-			inserirNomeEValorDoMaterial();
+			materialValido = false;
 
-			seOsDadosForamValidos = seOsDadosSaoValidos(material, valorMaterial);
-
-			if (!seOsDadosForamValidos) {
+			inserirMaterial();
+			if (!materialValido) {
+				if (escolha.confirmarOuNegarDados("SIM", "NÃO",
+						"O MATERIAL NÃO FOI INSERIDO, DESEJA CANCELAR A EXECUÇÃO?")) {
+					return;
+				}
 				continue;
 			}
-		} while (!seOsDadosForamValidos);
 
-		materiais.inserirMaterial(material, valorMaterial);
+			do {
+				valorValido = false;
+				inserirValor();
+				if (!valorValido) {
+					if (escolha.confirmarOuNegarDados("SIM", "NÃO",
+							"O VALOR NÃO FOI INSERIDO, DESEJA CANCELAR A EXECUÇÃO?")) {
+						return;
+					}
+				}
+			} while (!valorValido);
+		} while (!materialValido || !valorValido);
+		materiais.inserirMaterial(material, valor);
 		interacao.mostrarMensagemDeInformacao("MATERIAL ADICIONADO COM SUCESSO.");
 	}
 
-	private boolean seOsDadosSaoValidos(String material, Double valorMaterial) {
-		if (valorMaterial < 0) {
-			interacao.mostrarMensagemDeErro("ERRO! O MATERIAL PRECISA TER NO MÍNIMO O VALOR DE 0.");
-			return false;
-		} else if (material == null || valorMaterial == null) {
-			interacao.mostrarMensagemDeErro("ERRO! DADOS VAZIOS.");
-			return false;
-		} else {
-			return true;
+	private void inserirMaterial() {
+		material = interacao.inserirDadoDeTexto("INSIRA O NOME DO MATERIAL:");
+		verificarSeOMaterialEValido();
+	}
+
+	private void inserirValor() {
+		try {
+			valor = interacao
+					.inserirDadoNumericoFlutuante("INSIRA O VALOR QUE O MATERIAL POSSUI AO SUBTRAIR NO ORÇAMENTO:");
+			verificarSeOValorEValido();
+		} catch (Exception e) {
+			definirValorComoInvalido();
+			return;
 		}
+		valorValido = true;
+	}
+
+	private void verificarSeOMaterialEValido() {
+		if (material == null || material.isEmpty()) {
+			materialValido = false;
+		} else {
+			materialValido = true;
+		}
+	}
+
+	private void verificarSeOValorEValido() {
+		String valorStr = String.valueOf(valor);
+		if (valorStr.isEmpty()) {
+			definirValorComoInvalido();
+		}
+	}
+
+	private void definirValorComoInvalido() {
+		valorValido = false;
 	}
 
 }

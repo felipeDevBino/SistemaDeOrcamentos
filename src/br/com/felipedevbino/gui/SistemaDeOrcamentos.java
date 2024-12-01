@@ -3,7 +3,11 @@ package br.com.felipedevbino.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -19,13 +23,10 @@ import br.com.felipedevbino.logicaexecucao.logicadados.materiais.BuscarMaterial;
 import br.com.felipedevbino.logicaexecucao.logicadados.partes.AdicionarParte;
 import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class SistemaDeOrcamentos {
 
 	private JFrame frame;
+	private JPanel panel;
 	private Interacao interacao;
 	private BuscarEtapa buscarEtapas;
 	private BuscarParte buscarPartes;
@@ -91,6 +92,14 @@ public class SistemaDeOrcamentos {
 		adicionarMateriais = new AdicionarMaterial();
 	}
 
+	public JFrame getJFrame() {
+		return frame;
+	}
+	
+	public JPanel getJPanel() {
+		return panel;
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -100,20 +109,19 @@ public class SistemaDeOrcamentos {
 
 		frame = new JFrame();
 		frame.setName("Sistema de Orçamentos");
-		frame.setBounds(100, 100, 1213, 746);
+		frame.setBounds(100, 100, 1213, 643);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JPanel panel = new JPanel();
-
+		panel = new JPanel();
 		panel.setBounds(0, 0, 1207, 707);
 		panel.setBackground(new Color(135, 135, 135));
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		JLabel lblSistemaDeOrcamentos = new JLabel("SISTEMA DE ORÇAMENTOS");
+		lblSistemaDeOrcamentos.setBounds(303, -2, 605, 48);
 		lblSistemaDeOrcamentos.setFont(new Font("Arial Black", Font.PLAIN, 39));
-		lblSistemaDeOrcamentos.setBounds(311, 11, 605, 48);
 		lblSistemaDeOrcamentos.setForeground(Color.WHITE);
 		panel.add(lblSistemaDeOrcamentos);
 
@@ -121,13 +129,14 @@ public class SistemaDeOrcamentos {
 		telaInterativa.setBounds(303, 78, 588, 337);
 		panel.add(telaInterativa);
 
-		JButton botaoAtualizar = new JButton("ATUALIZAR");	
-		botaoAtualizar.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		JButton botaoAtualizar = new JButton("ATUALIZAR");
 		botaoAtualizar.setBounds(303, 426, 588, 41);
+		botaoAtualizar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAtualizar);
 
-		JLabel infoAutor = new JLabel("@felipeDevBino / felipereisbino@gmail.com / (41) 998744825");
-		infoAutor.setBounds(851, 682, 346, 14);
+		JLabel infoAutor = new JLabel("@felipeDevBino / felipereisbino@gmail.com / (41) 99874-4825");
+		infoAutor.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		infoAutor.setBounds(331, 52, 655, 15);
 		infoAutor.setForeground(Color.WHITE);
 		panel.add(infoAutor);
 
@@ -140,28 +149,28 @@ public class SistemaDeOrcamentos {
 		panel.add(iconeDificuldade);
 
 		JButton botaoVoltar = new JButton("VOLTAR");
-		botaoVoltar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoVoltar.setBounds(32, 11, 244, 41);
+		botaoVoltar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoVoltar);
 
 		JButton botaoEditar = new JButton("EDITAR");
-		botaoEditar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoEditar.setBounds(303, 478, 139, 50);
+		botaoEditar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoEditar);
 
 		JButton botaoPreVisualizar = new JButton("PRÉ-VISUALIZAR");
-		botaoPreVisualizar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		botaoPreVisualizar.setBounds(529, 478, 139, 50);
+		botaoPreVisualizar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		panel.add(botaoPreVisualizar);
 
 		JButton botaoConfigurar = new JButton("CONFIGURAR ");
-		botaoConfigurar.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		botaoConfigurar.setBounds(752, 478, 139, 50);
+		botaoConfigurar.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoConfigurar);
 
 		JButton botaoSalvar = new JButton("SALVAR");
-		botaoSalvar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoSalvar.setBounds(32, 461, 244, 65);
+		botaoSalvar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoSalvar);
 
 		JLabel iconeOrcamentos = new JLabel("");
@@ -169,75 +178,80 @@ public class SistemaDeOrcamentos {
 		panel.add(iconeOrcamentos);
 
 		JButton botaoEstimativa = new JButton("ESTIMATIVA");
-		botaoEstimativa.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoEstimativa.setBounds(32, 385, 244, 65);
+		botaoEstimativa.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoEstimativa);
 
 		JButton botaoAddMateriais = new JButton("ADICIONAR MATERIAIS");
+		botaoAddMateriais.setBounds(32, 308, 244, 65);
 		botaoAddMateriais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionarMateriais.adicionarMaterialAoOrcamento();
-				buscarMateriais.buscarMaterial();
 			}
 		});
 		botaoAddMateriais.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		botaoAddMateriais.setBounds(32, 308, 244, 65);
 		panel.add(botaoAddMateriais);
 
 		JButton botaoAddEmpecilho = new JButton("ADICIONAR EMPECILHO");
+		botaoAddEmpecilho.setBounds(32, 232, 244, 65);
 		botaoAddEmpecilho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
-				buscarEmpecilho.buscarEmpecilho();
 			}
 		});
 		botaoAddEmpecilho.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		botaoAddEmpecilho.setBounds(32, 232, 244, 65);
 		panel.add(botaoAddEmpecilho);
 
 		JButton botaoAddParte = new JButton("ADICIONAR PARTE");
+		botaoAddParte.setBounds(32, 156, 244, 65);
 		botaoAddParte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionarParte.adicionarParteAQualquerEtapa();
 			}
 		});
 		botaoAddParte.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		botaoAddParte.setBounds(32, 156, 244, 65);
 		panel.add(botaoAddParte);
 
 		JButton botaoAddEtapa = new JButton("ADICIONAR ETAPA");
+		botaoAddEtapa.setBounds(32, 80, 244, 65);
 		botaoAddEtapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionarEtapa.adicionarEtapaAoOrcamento();
 			}
 		});
 		botaoAddEtapa.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		botaoAddEtapa.setBounds(32, 80, 244, 65);
 		panel.add(botaoAddEtapa);
 
 		JButton botaoEstilo = new JButton("ESTILO DE FORMATAÇÃO");
-		botaoEstilo.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		botaoEstilo.setBounds(926, 366, 244, 65);
+		botaoEstilo.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoEstilo);
 
 		JButton botaoEmitirArquivo = new JButton("EMITIR ARQUIVO");
-		botaoEmitirArquivo.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoEmitirArquivo.setBounds(926, 270, 244, 65);
+		botaoEmitirArquivo.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoEmitirArquivo);
 
 		JButton botaoResetar = new JButton("RESETAR ORÇAMENTO");
-		botaoResetar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		botaoResetar.setBounds(926, 177, 244, 65);
+		botaoResetar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoResetar);
 
 		JButton botaoMudarNomeArq = new JButton("MUDAR NOME DO ARQUIVO");
-		botaoMudarNomeArq.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		botaoMudarNomeArq.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+			}
+		});
 		botaoMudarNomeArq.setBounds(926, 80, 244, 65);
+		botaoMudarNomeArq.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoMudarNomeArq);
 
 		JButton botaoProgresso = new JButton("MOSTRAR PROGRESSO");
-		botaoProgresso.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		botaoProgresso.setBounds(926, 463, 244, 65);
+		botaoProgresso.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoProgresso);
 
 		JLabel informacoes = new JLabel("");
@@ -246,8 +260,8 @@ public class SistemaDeOrcamentos {
 
 		ImageIcon icon = new ImageIcon(SistemaDeOrcamentos.class.getResource("/resources/background.png"));
 		JLabel planoDeFundo = new JLabel(icon);
-		planoDeFundo.setBounds(-19, 0, 1226, 707);
+		planoDeFundo.setBounds(0, 0, 1207, 707);
 		panel.add(planoDeFundo);
-
+		
 	}
 }
