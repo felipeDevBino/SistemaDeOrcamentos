@@ -11,7 +11,7 @@ public class ModeloDificuldade {
 	private ModeloParaDados modelo;
 
 	public ModeloDificuldade() {
-		dificuldades = new HashMap<Object, String>();
+		dificuldades = new HashMap<>();
 		modelo = new ModeloParaDados();
 	}
 

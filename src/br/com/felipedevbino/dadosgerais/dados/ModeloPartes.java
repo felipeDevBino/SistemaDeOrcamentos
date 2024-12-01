@@ -7,11 +7,11 @@ import br.com.felipedevbino.dadosgerais.ModeloParaDados;
 
 public class ModeloPartes {
 
-	public Map<String, Double> partes;
+	private Map<String, Double> partes;
 	private ModeloParaDados modelo;
 
 	public ModeloPartes() {
-		partes = new HashMap<String, Double>();
+		partes = new HashMap<>();
 		modelo = new ModeloParaDados();
 	}
 

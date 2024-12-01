@@ -11,7 +11,7 @@ public class ModeloMateriais {
 	private ModeloParaDados modelo;
 
 	public ModeloMateriais() {
-		materiais = new HashMap<String, Double>();
+		materiais = new HashMap<>();
 		modelo = new ModeloParaDados();
 	}
 

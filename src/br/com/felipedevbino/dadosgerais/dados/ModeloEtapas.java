@@ -12,7 +12,7 @@ public class ModeloEtapas {
 	private ModeloParaDados modelo;
 
 	public ModeloEtapas() {
-		etapas = new HashMap<String, Map<String, Double>>();
+		etapas = new HashMap<>();
 		modelo = new ModeloParaDados();
 	}
 
@@ -24,12 +24,11 @@ public class ModeloEtapas {
 		if (etapas.containsKey(etapa)) {
 			copiaPartes = new HashMap<>(etapas.get(etapa));
 		} else {
-			copiaPartes = new HashMap<String, Double>();
+			copiaPartes = new HashMap<>();
 		}
 		if (partes != null) {
 			copiaPartes.putAll(partes);
 		}
-
 		return copiaPartes;
 	}
 

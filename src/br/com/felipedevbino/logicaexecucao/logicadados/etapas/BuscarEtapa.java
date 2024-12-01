@@ -79,7 +79,6 @@ public class BuscarEtapa {
 			interacao.mostrarMensagemDeErro("ERRO! NENHUMA ETAPA REGISTRADA.");
 			return;
 		}
-		
 		contador = 1;
 		todasAsEtapas = new StringBuilder();
 		
