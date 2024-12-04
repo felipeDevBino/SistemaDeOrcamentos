@@ -1,7 +1,7 @@
 package br.com.felipedevbino.dadosgerais.dados;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import br.com.felipedevbino.dadosgerais.ModeloParaDados;
 
@@ -12,7 +12,7 @@ public class ModeloEtapas {
 	private ModeloParaDados modelo;
 
 	public ModeloEtapas() {
-		etapas = new HashMap<>();
+		etapas = new LinkedHashMap<>();
 		modelo = new ModeloParaDados();
 	}
 
@@ -22,9 +22,9 @@ public class ModeloEtapas {
 
 	private Map<String, Double> retornarNovasPartes(String etapa, Map<String, Double> partes) {
 		if (etapas.containsKey(etapa)) {
-			copiaPartes = new HashMap<>(etapas.get(etapa));
+			copiaPartes = new LinkedHashMap<>(etapas.get(etapa));
 		} else {
-			copiaPartes = new HashMap<>();
+			copiaPartes = new LinkedHashMap<>();
 		}
 		if (partes != null) {
 			copiaPartes.putAll(partes);
