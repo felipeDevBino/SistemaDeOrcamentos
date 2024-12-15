@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
@@ -13,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
@@ -28,6 +31,7 @@ public class SistemaDeOrcamentos {
 	private JFrame frame;
 	private JPanel panel;
 	private Interacao interacao;
+	private CaixaDeEscolha escolha;
 	private BuscarEtapa buscarEtapas;
 	private BuscarParte buscarPartes;
 	private BuscarEmpecilho buscarEmpecilho;
@@ -82,6 +86,7 @@ public class SistemaDeOrcamentos {
 
 	private void inicializarInstancias() {
 		interacao = new Interacao();
+		escolha = new CaixaDeEscolha();
 		buscarEtapas = new BuscarEtapa();
 		buscarPartes = new BuscarParte();
 		buscarEmpecilho = new BuscarEmpecilho();
@@ -95,7 +100,7 @@ public class SistemaDeOrcamentos {
 	public JFrame getJFrame() {
 		return frame;
 	}
-	
+
 	public JPanel getJPanel() {
 		return panel;
 	}
@@ -108,160 +113,174 @@ public class SistemaDeOrcamentos {
 		inicializarInstancias();
 
 		frame = new JFrame();
-		frame.setName("Sistema de Orçamentos");
-		frame.setBounds(100, 100, 1213, 643);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Sistema de Orçamentos");
+		frame.setBounds(100, 100, 1202, 632);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		frame.setLocationRelativeTo(null);
+		frame.setUndecorated(true);
+		frame.setAlwaysOnTop(true);
+		
 		panel = new JPanel();
-		panel.setBounds(0, 0, 1207, 707);
+		panel.setBounds(0, 0, 1500, 1580);
 		panel.setBackground(new Color(135, 135, 135));
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		JLabel lblSistemaDeOrcamentos = new JLabel("SISTEMA DE ORÇAMENTOS");
-		lblSistemaDeOrcamentos.setBounds(303, -2, 605, 48);
+		lblSistemaDeOrcamentos.setBounds(301, 42, 605, 48);
 		lblSistemaDeOrcamentos.setFont(new Font("Arial Black", Font.PLAIN, 39));
 		lblSistemaDeOrcamentos.setForeground(Color.WHITE);
 		panel.add(lblSistemaDeOrcamentos);
 
 		JScrollPane telaInterativa = new JScrollPane();
-		telaInterativa.setBounds(303, 78, 588, 337);
+		telaInterativa.setBounds(301, 122, 588, 337);
 		panel.add(telaInterativa);
 
 		JButton botaoAtualizar = new JButton("ATUALIZAR");
-		botaoAtualizar.setBounds(303, 426, 588, 41);
+		botaoAtualizar.setBounds(301, 470, 588, 41);
 		botaoAtualizar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAtualizar);
 
 		JLabel infoAutor = new JLabel("@felipeDevBino / felipereisbino@gmail.com / (41) 99874-4825");
+		infoAutor.setBounds(329, 96, 655, 15);
 		infoAutor.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		infoAutor.setBounds(331, 52, 655, 15);
 		infoAutor.setForeground(Color.WHITE);
 		panel.add(infoAutor);
 
-		JLabel iconeProgresso = new JLabel("");
-		iconeProgresso.setBounds(32, 537, 121, 120);
-		panel.add(iconeProgresso);
-
-		JLabel iconeDificuldade = new JLabel("");
-		iconeDificuldade.setBounds(157, 537, 119, 120);
-		panel.add(iconeDificuldade);
-
 		JButton botaoVoltar = new JButton("VOLTAR");
-		botaoVoltar.setBounds(32, 11, 244, 41);
+		botaoVoltar.setBounds(30, 31, 244, 65);
 		botaoVoltar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoVoltar);
 
 		JButton botaoEditar = new JButton("EDITAR");
-		botaoEditar.setBounds(303, 478, 139, 50);
+		botaoEditar.setBounds(301, 522, 139, 50);
 		botaoEditar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoEditar);
 
 		JButton botaoPreVisualizar = new JButton("PRÉ-VISUALIZAR");
-		botaoPreVisualizar.setBounds(529, 478, 139, 50);
+		botaoPreVisualizar.setBounds(527, 522, 139, 50);
 		botaoPreVisualizar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		panel.add(botaoPreVisualizar);
 
 		JButton botaoConfigurar = new JButton("CONFIGURAR ");
-		botaoConfigurar.setBounds(752, 478, 139, 50);
+		botaoConfigurar.setBounds(750, 522, 139, 50);
 		botaoConfigurar.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoConfigurar);
 
 		JButton botaoSalvar = new JButton("SALVAR");
-		botaoSalvar.setBounds(32, 461, 244, 65);
+		botaoSalvar.setBounds(30, 505, 244, 65);
 		botaoSalvar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoSalvar);
 
-		JLabel iconeOrcamentos = new JLabel("");
-		iconeOrcamentos.setBounds(926, 11, 237, 47);
-		panel.add(iconeOrcamentos);
-
 		JButton botaoEstimativa = new JButton("ESTIMATIVA");
-		botaoEstimativa.setBounds(32, 385, 244, 65);
+		botaoEstimativa.setBounds(30, 429, 244, 65);
 		botaoEstimativa.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoEstimativa);
 
 		JButton botaoAddMateriais = new JButton("ADICIONAR MATERIAIS");
-		botaoAddMateriais.setBounds(32, 308, 244, 65);
+		botaoAddMateriais.setBounds(30, 352, 244, 65);
 		botaoAddMateriais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
 				adicionarMateriais.adicionarMaterialAoOrcamento();
+				frame.setAlwaysOnTop(true);
 			}
 		});
 		botaoAddMateriais.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAddMateriais);
 
 		JButton botaoAddEmpecilho = new JButton("ADICIONAR EMPECILHO");
-		botaoAddEmpecilho.setBounds(32, 232, 244, 65);
+		botaoAddEmpecilho.setBounds(30, 276, 244, 65);
 		botaoAddEmpecilho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
 				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
+				frame.setAlwaysOnTop(true);
 			}
 		});
 		botaoAddEmpecilho.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAddEmpecilho);
 
 		JButton botaoAddParte = new JButton("ADICIONAR PARTE");
-		botaoAddParte.setBounds(32, 156, 244, 65);
+		botaoAddParte.setBounds(30, 200, 244, 65);
 		botaoAddParte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
 				adicionarParte.adicionarParteAQualquerEtapa();
+				frame.setAlwaysOnTop(true);
 			}
 		});
 		botaoAddParte.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAddParte);
 
 		JButton botaoAddEtapa = new JButton("ADICIONAR ETAPA");
-		botaoAddEtapa.setBounds(32, 80, 244, 65);
+		botaoAddEtapa.setBounds(30, 122, 244, 65);
 		botaoAddEtapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
+				frame.setAlwaysOnTop(true);
 			}
 		});
 		botaoAddEtapa.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAddEtapa);
 
 		JButton botaoEstilo = new JButton("ESTILO DE FORMATAÇÃO");
-		botaoEstilo.setBounds(926, 366, 244, 65);
+		botaoEstilo.setBounds(924, 410, 244, 65);
 		botaoEstilo.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoEstilo);
 
 		JButton botaoEmitirArquivo = new JButton("EMITIR ARQUIVO");
-		botaoEmitirArquivo.setBounds(926, 270, 244, 65);
+		botaoEmitirArquivo.setBounds(924, 314, 244, 65);
 		botaoEmitirArquivo.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoEmitirArquivo);
 
 		JButton botaoResetar = new JButton("RESETAR ORÇAMENTO");
-		botaoResetar.setBounds(926, 177, 244, 65);
+		botaoResetar.setBounds(924, 221, 244, 65);
 		botaoResetar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoResetar);
 
 		JButton botaoMudarNomeArq = new JButton("MUDAR NOME DO ARQUIVO");
+		botaoMudarNomeArq.setBounds(924, 124, 244, 65);
 		botaoMudarNomeArq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+
 			}
 		});
-		botaoMudarNomeArq.setBounds(926, 80, 244, 65);
 		botaoMudarNomeArq.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoMudarNomeArq);
 
 		JButton botaoProgresso = new JButton("MOSTRAR PROGRESSO");
-		botaoProgresso.setBounds(926, 463, 244, 65);
+		botaoProgresso.setBounds(924, 506, 244, 65);
 		botaoProgresso.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		panel.add(botaoProgresso);
 
-		JLabel informacoes = new JLabel("");
-		informacoes.setBounds(303, 553, 588, 98);
-		panel.add(informacoes);
+		JButton btnTerminar = new JButton("TERMINAR");
+		btnTerminar.setBounds(916, 31, 252, 65);
+		btnTerminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
+				seDesejaEncerrar();
+				if(frame.isVisible()) {					
+					frame.setAlwaysOnTop(true);
+				}
+				return;
+			}
+		});
+		btnTerminar.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		panel.add(btnTerminar);
 
 		ImageIcon icon = new ImageIcon(SistemaDeOrcamentos.class.getResource("/resources/background.png"));
 		JLabel planoDeFundo = new JLabel(icon);
-		planoDeFundo.setBounds(0, 0, 1207, 707);
+		planoDeFundo.setBounds(-140, 0, 1499, 707);
 		panel.add(planoDeFundo);
-		
+
+	}
+
+	private void seDesejaEncerrar() {
+		if (escolha.confirmarOuNegarDados("SIM", "NÃO", "VOCÊ REALMENTE DESEJA ENCERRAR O PROGRAMA?")) {
+			System.exit(0);
+		}
 	}
 }

@@ -1,10 +1,12 @@
 package br.com.felipedevbino.dadosgerais;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
 public class ModeloParaDados {
-
+	
 	/**
 	 * Método para deletar itens de ArrayLists de Strings.
 	 * 
@@ -30,7 +32,7 @@ public class ModeloParaDados {
 	 * @return
 	 */
 	public void remover(String dadoParaRemocao, Map<String, List<String>> dadosStr,
-			Map<String, Double> dadosDouble) {
+			Map<String, BigDecimal> dadosDouble) {
 		if (dadosStr.containsKey(dadoParaRemocao)) {
 			dadosStr.remove(dadoParaRemocao);
 
@@ -46,7 +48,7 @@ public class ModeloParaDados {
 	 * @param dadosDoubleMap
 	 * @return
 	 */
-	public void remover(String dadoParaRemocao, Map<String, Map<String, Double>> dadosDoubleMap) {
+	public void remover(String dadoParaRemocao, Map<String, Map<String, BigDecimal>> dadosDoubleMap) {
 		if (dadosDoubleMap.containsKey(dadoParaRemocao)) {
 			dadosDoubleMap.remove(dadoParaRemocao);
 		}
@@ -79,7 +81,7 @@ public class ModeloParaDados {
 	 * @param dados
 	 */
 	public void renomear(String novoNome, String dadoParaRenomear, Map<String, List<String>> dadosStr,
-			Map<String, Double> dadosDouble) {
+			Map<String, BigDecimal> dadosDouble) {
 
 		if (dadosStr.containsKey(dadoParaRenomear)) {
 			List<String> copiaValor = dadosStr.get(dadoParaRenomear);
@@ -87,7 +89,7 @@ public class ModeloParaDados {
 			dadosStr.put(novoNome, copiaValor);
 
 		} else if (dadosDouble.containsKey(dadoParaRenomear)) {
-			double copiaValor = dadosDouble.get(dadoParaRenomear);
+			BigDecimal copiaValor = dadosDouble.get(dadoParaRenomear);
 			dadosDouble.remove(dadoParaRenomear);
 			dadosDouble.put(novoNome, copiaValor);
 
@@ -101,9 +103,9 @@ public class ModeloParaDados {
 	 * @param dadoParaRenomear
 	 * @param dadosDoubleMap
 	 */
-	public void renomear(String novoNome, String dadoParaRenomear, Map<String, Map<String, Double>> dadosDoubleMap) {
+	public void renomear(String novoNome, String dadoParaRenomear, Map<String, Map<String, BigDecimal>> dadosDoubleMap) {
 		if(dadosDoubleMap.containsKey(dadoParaRenomear)) { 
-			Map<String, Double> dadosDoubleMapCopia = dadosDoubleMap.get(dadoParaRenomear);
+			Map<String, BigDecimal> dadosDoubleMapCopia = dadosDoubleMap.get(dadoParaRenomear);
 			dadosDoubleMap.remove(dadoParaRenomear);
 			dadosDoubleMap.put(novoNome, dadosDoubleMapCopia);
 		}

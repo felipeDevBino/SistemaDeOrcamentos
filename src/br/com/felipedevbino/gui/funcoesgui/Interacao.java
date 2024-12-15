@@ -20,6 +20,10 @@ public class Interacao {
 	public void mostrarMensagemDeInformacao(String mensagem) {
 		tipo(mensagem, "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	public void mostrarMensagemDeAviso(String mensagem) {
+		tipo(mensagem, "AVISO", JOptionPane.WARNING_MESSAGE);
+	}
 
 	public String mostrarMensagemDeErro(String mensagem) {
 		tipo(mensagem, "ERRO", JOptionPane.ERROR_MESSAGE);

@@ -198,9 +198,11 @@ public class AdicionarParte {
 			seAEtapaFoiDefinida = true;
 			try {
 				etapaEncontrada = buscarEtapa.buscarEtapa();
+				seAEtapaFoiDefinida = buscarEtapa.verificarSeAEtapaExiste(etapaEncontrada);
 			} catch (Exception e) {
 				interacao.mostrarMensagemDeErro("ERRO! INSIRA UMA POSIÇÃO VÁLIDA.");
 				seAEtapaFoiDefinida = false;
+				continue;
 			}
 		} while (etapaEncontrada == null || !seAEtapaFoiDefinida);
 	}

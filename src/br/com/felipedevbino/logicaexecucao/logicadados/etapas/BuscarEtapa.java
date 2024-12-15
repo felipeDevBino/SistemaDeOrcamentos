@@ -23,24 +23,21 @@ public class BuscarEtapa {
 				.inserirDadoNumericoInteiro(String.format("%s\n\nINSIRA O NÚMERO DA ETAPA:", mostrarTodasAsEtapas()));
 		String etapa = selecionarEtapaPorPosicao(posicao);
 
-		if (verificarSeAEtapaExiste(etapa)) {
-			return etapa;
-		}
-		return "";
+		return etapa;
 	}
-
-
-	private boolean seNaoHaEtapas() {
-		return etapas.getEtapas() == null || etapas.getEtapas().isEmpty();
-	}
-
-	private boolean verificarSeAEtapaExiste(String etapaSolicitada) {
+	
+	public boolean verificarSeAEtapaExiste(String etapaSolicitada) {
 		for (String etapa : etapas.getEtapas().keySet()) {
 			if (etapa.equalsIgnoreCase(etapaSolicitada)) {
 				return true;
 			}
 		}
+		interacao.mostrarMensagemDeErro("ERRO! A ETAPA INFORMADA NÃO EXISTE.");
 		return false;
+	}
+
+	private boolean seNaoHaEtapas() {
+		return etapas.getEtapas() == null || etapas.getEtapas().isEmpty();
 	}
 
 	private String selecionarEtapaPorPosicao(int posicao) {
@@ -53,7 +50,6 @@ public class BuscarEtapa {
 		}
 		return "";
 	}
-
 
 	private void construirCorpoEtapaSemPartes() {
 		for (String etapa : etapas.getEtapas().keySet()) {

@@ -101,7 +101,7 @@ public class AdicionarEmpecilho {
 
 	private void verificarSeOValorEValido() {
 		Optional<Double> seOValorENulo = Optional.ofNullable(valorEmpecilho);
-		if (valorEmpecilho == null || seOValorENulo.isPresent() || seOValorENulo.isEmpty()) {
+		if (valorEmpecilho == null || !seOValorENulo.isPresent() || seOValorENulo.isEmpty()) {
 			defineValorComoInvalido();
 		}
 	}
