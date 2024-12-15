@@ -91,12 +91,7 @@ public class AdicionarEmpecilho {
 	}
 
 	private void verificarSeOEmpecilhoEValido() {
-		if (empecilho == null || empecilho.isEmpty()) {
-			empecilhoValido = false;
-		} else {
-			empecilhoValido = true;
-		}
-
+		empecilhoValido = (empecilho == null || empecilho.isEmpty()) ? false : true;
 	}
 
 	private void verificarSeOValorEValido() {

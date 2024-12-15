@@ -70,11 +70,7 @@ public class AdicionarMaterial {
 	}
 
 	private void verificarSeOMaterialEValido() {
-		if (material == null || material.isEmpty()) {
-			materialValido = false;
-		} else {
-			materialValido = true;
-		}
+		materialValido = (material == null || material.isEmpty()) ? false : true;
 	}
 
 	private void verificarSeOValorEValido() {

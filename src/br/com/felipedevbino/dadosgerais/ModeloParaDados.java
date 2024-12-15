@@ -1,14 +1,13 @@
 package br.com.felipedevbino.dadosgerais;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
 public class ModeloParaDados {
 	
 	/**
-	 * Método para deletar itens de ArrayLists de Strings.
+	 * Método para deletar itens de uma List de Strings.
 	 * 
 	 * @param dadoParaRemocao
 	 * @param dados
@@ -24,8 +23,8 @@ public class ModeloParaDados {
 	}
 
 	/**
-	 * Método para deletar itens de HashMaps (String, List de Strings) & (String,
-	 * Double).
+	 * Método para deletar itens de Maps (String, List de Strings) & (String,
+	 * BigDecimal).
 	 * 
 	 * @param dadoParaRemocao
 	 * @param dados
@@ -42,7 +41,7 @@ public class ModeloParaDados {
 	}
 
 	/**
-	 * Método para deletar itens de HashMaps (String, Map<String, Double>).
+	 * Método para deletar itens de Maps (String, Map<String, BigDecimal>).
 	 * 
 	 * @param dadoParaRemocao
 	 * @param dadosDoubleMap
@@ -55,7 +54,7 @@ public class ModeloParaDados {
 	}
 
 	/**
-	 * Método para renomear itens de ArrayLists de Strings.
+	 * Método para renomear itens de uma List de Strings.
 	 * 
 	 * @param novoNome
 	 * @param dadoParaRenomear
@@ -73,8 +72,8 @@ public class ModeloParaDados {
 	}
 
 	/**
-	 * Método para renomear itens de HashMaps (String, List de Strings) & (String,
-	 * Double).
+	 * Método para renomear itens de Maps (String, List de Strings) & (String,
+	 * BigDecimal).
 	 * 
 	 * @param novoItem
 	 * @param dadoParaRenomear
@@ -97,7 +96,7 @@ public class ModeloParaDados {
 	}
 	
 	/**
-	 * Método para renomear itens de HashMaps (String, Map<String, Double>).
+	 * Método para renomear itens de Maps (String, Map<String, BigDecimal>).
 	 * 
 	 * @param novoNome
 	 * @param dadoParaRenomear
@@ -112,7 +111,7 @@ public class ModeloParaDados {
 	}
 
 	/**
-	 * Método para modificar itens de um HashMap de (Object, String).
+	 * Método para modificar itens de um Map de (Object, String).
 	 * 
 	 * @param instancia
 	 * @param novaDificuldade

@@ -123,10 +123,7 @@ public class AdicionarParte {
 	}
 
 	private boolean seAParteEstaVazia() {
-		if (parte == null || parte.isEmpty()) {
-			return true;
-		}
-		return false;
+		return parte == null || parte.isEmpty();
 	}
 
 	private void verificarSeOValorEValido() {
