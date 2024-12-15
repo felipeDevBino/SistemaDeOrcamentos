@@ -63,10 +63,7 @@ public class AdicionarEtapa {
 	}
 
 	private boolean seAEtapaEstaVazia() {
-		if (etapa == null || etapa.isEmpty()) {
-			return true;
-		}
-		return false;
+		return etapa == null || etapa.isEmpty();
 	}
 
 	private void avaliarEscolha() {

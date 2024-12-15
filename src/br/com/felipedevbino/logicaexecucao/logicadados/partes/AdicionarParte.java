@@ -123,10 +123,7 @@ public class AdicionarParte {
 	}
 
 	private boolean seAParteEstaVazia() {
-		if (parte == null || parte.isEmpty()) {
-			return true;
-		}
-		return false;
+		return parte == null || parte.isEmpty();
 	}
 
 	private void verificarSeOValorEValido() {
@@ -198,9 +195,11 @@ public class AdicionarParte {
 			seAEtapaFoiDefinida = true;
 			try {
 				etapaEncontrada = buscarEtapa.buscarEtapa();
+				seAEtapaFoiDefinida = buscarEtapa.verificarSeAEtapaExiste(etapaEncontrada);
 			} catch (Exception e) {
 				interacao.mostrarMensagemDeErro("ERRO! INSIRA UMA POSIÇÃO VÁLIDA.");
 				seAEtapaFoiDefinida = false;
+				continue;
 			}
 		} while (etapaEncontrada == null || !seAEtapaFoiDefinida);
 	}

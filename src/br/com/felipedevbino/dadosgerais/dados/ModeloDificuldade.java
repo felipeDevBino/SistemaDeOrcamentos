@@ -1,6 +1,6 @@
 package br.com.felipedevbino.dadosgerais.dados;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import br.com.felipedevbino.dadosgerais.ModeloParaDados;
@@ -11,7 +11,7 @@ public class ModeloDificuldade {
 	private ModeloParaDados modelo;
 
 	public ModeloDificuldade() {
-		dificuldades = new HashMap<>();
+		dificuldades = new LinkedHashMap<>();
 		modelo = new ModeloParaDados();
 	}
 

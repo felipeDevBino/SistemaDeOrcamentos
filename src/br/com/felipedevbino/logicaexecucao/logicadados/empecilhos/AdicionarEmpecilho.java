@@ -91,17 +91,12 @@ public class AdicionarEmpecilho {
 	}
 
 	private void verificarSeOEmpecilhoEValido() {
-		if (empecilho == null || empecilho.isEmpty()) {
-			empecilhoValido = false;
-		} else {
-			empecilhoValido = true;
-		}
-
+		empecilhoValido = (empecilho == null || empecilho.isEmpty()) ? false : true;
 	}
 
 	private void verificarSeOValorEValido() {
 		Optional<Double> seOValorENulo = Optional.ofNullable(valorEmpecilho);
-		if (valorEmpecilho == null || seOValorENulo.isPresent() || seOValorENulo.isEmpty()) {
+		if (valorEmpecilho == null || !seOValorENulo.isPresent() || seOValorENulo.isEmpty()) {
 			defineValorComoInvalido();
 		}
 	}
