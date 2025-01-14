@@ -3,6 +3,7 @@ package br.com.felipedevbino.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -11,12 +12,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
+import br.com.felipedevbino.gui.funcoesgui.LogicaPainel;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.etapas.AdicionarEtapa;
@@ -31,6 +34,7 @@ public class SistemaDeOrcamentos {
 	private JFrame frame;
 	private JPanel panel;
 	private Interacao interacao;
+	private LogicaPainel logicaPainel;
 	private CaixaDeEscolha escolha;
 	private BuscarEtapa buscarEtapas;
 	private BuscarParte buscarPartes;
@@ -120,7 +124,7 @@ public class SistemaDeOrcamentos {
 		frame.setLocationRelativeTo(null);
 		frame.setUndecorated(true);
 		frame.setAlwaysOnTop(true);
-		
+
 		panel = new JPanel();
 		panel.setBounds(0, 0, 1500, 1580);
 		panel.setBackground(new Color(135, 135, 135));
@@ -134,7 +138,19 @@ public class SistemaDeOrcamentos {
 		panel.add(lblSistemaDeOrcamentos);
 
 		JScrollPane telaInterativa = new JScrollPane();
+
+		JPanel painelDeDados = new JPanel(); // < - PAINEL DE DADOS QUE SERÁ EXIBIDO NA JSCROLL PANE
+												// REALIZANDO ATUALIZAÇÕES NA EXIBIÇÃO A MEDIDA QUE
+												// O USUÁRIO USA O SISTEMA, ATUALIZANDO, REMOVENDO
+												// OU CRIANDO DADOS.
+		painelDeDados.setLayout(null);
+		logicaPainel = new LogicaPainel(painelDeDados);
+
 		telaInterativa.setBounds(301, 122, 588, 337);
+		telaInterativa.setViewportView(painelDeDados);
+		telaInterativa.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		telaInterativa.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		panel.add(telaInterativa);
 
 		JButton botaoAtualizar = new JButton("ATUALIZAR");
@@ -184,6 +200,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarMateriais.adicionarMaterialAoOrcamento();
+				// ATUALIZAR PAINEL
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -196,6 +213,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
+				// ATUALIZAR PAINEL
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -208,6 +226,10 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarParte.adicionarParteAQualquerEtapa();
+				//logicaPainel.adicionarNoPainel();
+				telaInterativa.repaint();
+				telaInterativa.revalidate();
+				// ATUALIZAR PAINEL
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -220,6 +242,10 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
+				//logicaPainel.adicionarNoPainel();
+				telaInterativa.repaint();
+				telaInterativa.revalidate();
+				// ATUALIZAR PAINEL
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -262,7 +288,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				seDesejaEncerrar();
-				if(frame.isVisible()) {					
+				if (frame.isVisible()) {
 					frame.setAlwaysOnTop(true);
 				}
 				return;

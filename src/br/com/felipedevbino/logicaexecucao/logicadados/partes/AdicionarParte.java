@@ -10,10 +10,10 @@ import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
 public class AdicionarParte {
 
 	private ModeloEtapas etapas = InstanceManager.getModeloEtapas();
+	private ModeloPartes partes;
 	private CaixaDeEscolha escolha;
 	private BuscarEtapa buscarEtapa;
 	private String etapaEncontrada;
-	private ModeloPartes partes;
 	private Interacao interacao;
 	private String parte;
 	private Double valor;
