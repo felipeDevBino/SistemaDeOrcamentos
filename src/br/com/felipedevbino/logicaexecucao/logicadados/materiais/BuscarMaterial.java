@@ -87,8 +87,6 @@ public class BuscarMaterial {
 		todosOsMateriais = new StringBuilder();
 
 		construirCorpoMateriaisComValor();
-
-		interacao.mostrarMensagemDeInformacao(todosOsMateriais.toString());
 	}
 
 }

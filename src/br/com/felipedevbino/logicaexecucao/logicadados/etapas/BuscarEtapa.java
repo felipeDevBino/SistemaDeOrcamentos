@@ -25,7 +25,7 @@ public class BuscarEtapa {
 
 		return etapa;
 	}
-	
+
 	public boolean verificarSeAEtapaExiste(String etapaSolicitada) {
 		for (String etapa : etapas.getEtapas().keySet()) {
 			if (etapa.equalsIgnoreCase(etapaSolicitada)) {
@@ -57,7 +57,7 @@ public class BuscarEtapa {
 			contador++;
 		}
 	}
-	
+
 	private void construirCorpoEtapaComPartes() {
 		for (String etapa : etapas.getEtapas().keySet()) {
 			todasAsEtapas.append(String.format("\n%d ETAPA - %s \n", contador, etapa));
@@ -77,9 +77,9 @@ public class BuscarEtapa {
 		}
 		contador = 1;
 		todasAsEtapas = new StringBuilder();
-		
+
 		construirCorpoEtapaComPartes();
-		
+
 		interacao.mostrarMensagemDeInformacao(todasAsEtapas.toString());
 	}
 
