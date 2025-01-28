@@ -2,8 +2,12 @@ package br.com.felipedevbino.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -24,6 +28,7 @@ import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.gui.painelinterativo.DadosNoPainel;
 import br.com.felipedevbino.gui.painelinterativo.LogicaPainel;
+import br.com.felipedevbino.gui.painelinterativo.posicionamento.Posicionamento;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.etapas.AdicionarEtapa;
@@ -39,7 +44,7 @@ public class SistemaDeOrcamentos {
 	private JFrame frame;
 	private JPanel panel;
 	private Interacao interacao;
-	private LogicaPainel logicaPainel;
+	private DadosNoPainel dadosNoPainel;
 	private CaixaDeEscolha escolha;
 	private BuscarEtapa buscarEtapas;
 	private BuscarParte buscarPartes;
@@ -49,7 +54,8 @@ public class SistemaDeOrcamentos {
 	private AdicionarParte adicionarParte;
 	private AdicionarEmpecilho adicionarEmpecilho;
 	private AdicionarMaterial adicionarMateriais;
-
+	private Posicionamento posicionar;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -104,6 +110,7 @@ public class SistemaDeOrcamentos {
 		adicionarParte = new AdicionarParte();
 		adicionarEmpecilho = new AdicionarEmpecilho();
 		adicionarMateriais = new AdicionarMaterial();
+		posicionar = new Posicionamento();
 	}
 
 	public JFrame getJFrame() {
@@ -118,7 +125,6 @@ public class SistemaDeOrcamentos {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
 		inicializarInstancias();
 
 		frame = new JFrame();
@@ -128,7 +134,7 @@ public class SistemaDeOrcamentos {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(null);
-		frame.setUndecorated(true);
+		frame.setUndecorated(false);
 		frame.setAlwaysOnTop(true);
 
 		panel = new JPanel();
@@ -144,17 +150,21 @@ public class SistemaDeOrcamentos {
 
 		// DEFININDO O PAINÉL DE DADOS DA JANELA INTERATIVA
 		JPanel telaInterativa = new JPanel();
-		telaInterativa.setLayout(new BoxLayout(telaInterativa, BoxLayout.Y_AXIS));
-		scrollPane.setViewportView(telaInterativa);
+		telaInterativa.setLayout(null);
+		telaInterativa.setPreferredSize(new Dimension(600, 1000));
 
-		telaInterativa.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+		dadosNoPainel = new DadosNoPainel(posicionar);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		scrollPane.setViewportView(telaInterativa);
 
 		// ATUALIZANDO A SCROLL PANE
 		scrollPane.revalidate();
 		scrollPane.repaint();
 
 		JLabel lblSistemaDeOrcamentos = new JLabel("SISTEMA DE ORÇAMENTOS");
-		lblSistemaDeOrcamentos.setBounds(301, 42, 605, 48);
+		lblSistemaDeOrcamentos.setBounds(301, 10, 605, 48);
 		lblSistemaDeOrcamentos.setFont(new Font("Arial Black", Font.PLAIN, 39));
 		lblSistemaDeOrcamentos.setForeground(Color.WHITE);
 		panel.add(lblSistemaDeOrcamentos);
@@ -163,15 +173,31 @@ public class SistemaDeOrcamentos {
 		botaoAtualizar.setBounds(301, 463, 588, 48);
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
+
+				if (telaInterativa.getComponentCount() == 0) {
+					if (!buscarEtapas.seNaoHaEtapas() || !buscarMateriais.seNaoHaMateriais()
+							|| !buscarEmpecilho.seNaoHaEmpecilhos()) {
+						dadosNoPainel.addEtapas(telaInterativa);
+						dadosNoPainel.addMateriais(telaInterativa);
+						dadosNoPainel.addEmpecilhos(telaInterativa);
+					} else {
+						interacao.mostrarMensagemDeErro(
+								"VOCÊ AINDA NÃO INSERIU NENHUM DADO PARA QUE POSSA SER EXIBIDO NO PAINÉL!");
+					}
+				}
+
 				telaInterativa.revalidate();
 				telaInterativa.repaint();
+
+				frame.setAlwaysOnTop(true);
 			}
 		});
 		botaoAtualizar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(botaoAtualizar);
 
 		JLabel infoAutor = new JLabel("@felipeDevBino / felipereisbino@gmail.com / (41) 99874-4825");
-		infoAutor.setBounds(329, 96, 655, 15);
+		infoAutor.setBounds(329, 50, 655, 15);
 		infoAutor.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		infoAutor.setForeground(Color.WHITE);
 		panel.add(infoAutor);
@@ -202,7 +228,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarMateriais.adicionarMaterialAoOrcamento();
-				// ATUALIZAR PAINEL
+				dadosNoPainel.addMateriais(telaInterativa);
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -215,7 +241,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
-				// ATUALIZAR PAINEL
+				dadosNoPainel.addEmpecilhos(telaInterativa);
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -228,8 +254,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarParte.adicionarParteAQualquerEtapa();
-				// logicaPainel.adicionarNoPainel();
-				// ATUALIZAR PAINEL
+				// TODO -> ATUALIZA A ETAPA COM A PARTE
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -242,8 +267,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
-				// logicaPainel.adicionarNoPainel();
-				// ATUALIZAR PAINEL
+				dadosNoPainel.addEtapas(telaInterativa);
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -294,6 +318,27 @@ public class SistemaDeOrcamentos {
 		btnConfigurar.setBounds(613, 522, 276, 77);
 		btnConfigurar.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		panel.add(btnConfigurar);
+
+		JButton btnLimpar = new JButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setAlwaysOnTop(false);
+				
+				if (telaInterativa.getComponentCount() == 0) {
+					interacao.mostrarMensagemDeErro("NÃO HÁ NENHUM DADO NO PAINÉL PARA SER REMOVIDO!");
+				}
+
+				telaInterativa.removeAll();
+				telaInterativa.revalidate();
+				telaInterativa.repaint();
+
+				posicionar.restaurarValoresDeTopo();
+				frame.setAlwaysOnTop(true);
+			}
+		});
+		btnLimpar.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnLimpar.setBounds(301, 69, 588, 48);
+		panel.add(btnLimpar);
 
 		ImageIcon icon = new ImageIcon(SistemaDeOrcamentos.class.getResource("/resources/background.png"));
 		JLabel planoDeFundo = new JLabel(icon);

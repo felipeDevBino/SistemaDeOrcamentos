@@ -1,5 +1,8 @@
 package br.com.felipedevbino.logicaexecucao.logicadados.etapas;
 
+import java.math.BigDecimal;
+import java.util.Map;
+
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.instancias.InstanceManager;
@@ -26,6 +29,18 @@ public class BuscarEtapa {
 		return etapa;
 	}
 
+	public String buscarEtapa(int posicao, String etapa) {
+		if (verificarSeAEtapaExiste(etapa)) {
+			for (Map<String, BigDecimal> parteNaEtapa : etapas.getEtapas().values()) {
+				if (buscarParte.verificarSeAEtapaInseridaCoincide(etapa, parteNaEtapa)) {
+					return String.format("%d ETAPA - %s %s ", (posicao + 1), etapa,
+							buscarParte.montarPartesParaExibicao(etapa));
+				}
+			}
+		}
+		return null;
+	}
+
 	public boolean verificarSeAEtapaExiste(String etapaSolicitada) {
 		for (String etapa : etapas.getEtapas().keySet()) {
 			if (etapa.equalsIgnoreCase(etapaSolicitada)) {
@@ -36,11 +51,11 @@ public class BuscarEtapa {
 		return false;
 	}
 
-	private boolean seNaoHaEtapas() {
+	public boolean seNaoHaEtapas() {
 		return etapas.getEtapas() == null || etapas.getEtapas().isEmpty();
 	}
 
-	private String selecionarEtapaPorPosicao(int posicao) {
+	public String selecionarEtapaPorPosicao(int posicao) {
 		contador = 1;
 		for (String nome : etapas.getEtapas().keySet()) {
 			if (posicao == contador) {
@@ -70,17 +85,17 @@ public class BuscarEtapa {
 		todasAsEtapas.append("\n");
 	}
 
-	public void mostrarEtapasComPartes() {
+	public String mostrarEtapasComPartes() {
 		if (seNaoHaEtapas()) {
 			interacao.mostrarMensagemDeErro("ERRO! NENHUMA ETAPA REGISTRADA.");
-			return;
+			return "";
 		}
 		contador = 1;
 		todasAsEtapas = new StringBuilder();
 
 		construirCorpoEtapaComPartes();
 
-		interacao.mostrarMensagemDeInformacao(todasAsEtapas.toString());
+		return todasAsEtapas.toString();
 	}
 
 	public String mostrarTodasAsEtapas() {

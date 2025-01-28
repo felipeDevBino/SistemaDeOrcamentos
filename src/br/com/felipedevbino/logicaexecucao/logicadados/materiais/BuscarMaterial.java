@@ -26,7 +26,7 @@ public class BuscarMaterial {
 		return "";
 	}
 
-	private boolean seNaoHaMateriais() {
+	public boolean seNaoHaMateriais() {
 		return materiais.getMateriais() == null || materiais.getMateriais().isEmpty();
 	}
 

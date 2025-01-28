@@ -27,7 +27,7 @@ public class BuscarParte {
 		return bigDecimal.doubleValue() == 0.0 || bigDecimal == null;
 	}
 
-	private boolean verificarSeAEtapaInseridaCoincide(String etapa, Map<String, BigDecimal> parteNaEtapa) {
+	public boolean verificarSeAEtapaInseridaCoincide(String etapa, Map<String, BigDecimal> parteNaEtapa) {
 		return etapas.getEtapas().get(etapa).equals(parteNaEtapa);
 	}
 

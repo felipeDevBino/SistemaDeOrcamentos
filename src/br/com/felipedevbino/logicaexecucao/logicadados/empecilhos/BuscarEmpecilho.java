@@ -26,7 +26,7 @@ public class BuscarEmpecilho {
 		return "";
 	}
 
-	private boolean seNaoHaEmpecilhos() {
+	public boolean seNaoHaEmpecilhos() {
 		return empecilhos.getEmpecilhos() == null || empecilhos.getEmpecilhos().isEmpty();
 	}
 
