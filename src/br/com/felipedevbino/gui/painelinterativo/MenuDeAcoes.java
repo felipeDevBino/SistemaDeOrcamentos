@@ -58,6 +58,7 @@ public class MenuDeAcoes {
 		frame.setTitle("AÇÕES");
 		frame.setResizable(true);
 		frame.setBounds(150, 61, 221, 151);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

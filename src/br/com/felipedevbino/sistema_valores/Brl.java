@@ -54,7 +54,10 @@ public class Brl {
 		int valorUltimoCaracter = definirValorUltimoCaracter();
 		Double decimalArredondado = definirDecimalArredondado(valorUltimoCaracter);
 
-		return valor += 0.10 - decimalArredondado;
+		if(valorUltimoCaracter > 0) {
+			return valor += 0.10 - decimalArredondado;			
+		}
+		return valor;
 	}
 
 	/**

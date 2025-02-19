@@ -16,6 +16,7 @@ public class InstanceManager {
 	
 	public static void inicializaOrcamentos() {
 		orcamentos = new SistemaDeOrcamentos();
+		orcamentos.getJFrame().setVisible(true);
 	}
 	
 	public static SistemaDeOrcamentos getSistemaDeOrcamentos() {

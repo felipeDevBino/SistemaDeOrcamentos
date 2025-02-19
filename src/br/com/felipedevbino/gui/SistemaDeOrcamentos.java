@@ -1,34 +1,29 @@
 package br.com.felipedevbino.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
+import br.com.felipedevbino.dadosgerais.dados.ModeloPartes;
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.gui.painelinterativo.DadosNoPainel;
-import br.com.felipedevbino.gui.painelinterativo.LogicaPainel;
 import br.com.felipedevbino.gui.painelinterativo.posicionamento.Posicionamento;
+import br.com.felipedevbino.instancias.InstanceManager;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.etapas.AdicionarEtapa;
@@ -37,7 +32,6 @@ import br.com.felipedevbino.logicaexecucao.logicadados.materiais.AdicionarMateri
 import br.com.felipedevbino.logicaexecucao.logicadados.materiais.BuscarMaterial;
 import br.com.felipedevbino.logicaexecucao.logicadados.partes.AdicionarParte;
 import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
-import javax.swing.JTable;
 
 public class SistemaDeOrcamentos {
 
@@ -55,7 +49,7 @@ public class SistemaDeOrcamentos {
 	private AdicionarEmpecilho adicionarEmpecilho;
 	private AdicionarMaterial adicionarMateriais;
 	private Posicionamento posicionar;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -129,11 +123,11 @@ public class SistemaDeOrcamentos {
 
 		frame = new JFrame();
 		frame.setTitle("Sistema de Orçamentos");
-		frame.setBounds(100, 100, 1202, 632);
+		frame.setBounds(100, 100, 1202, 670);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		frame.setUndecorated(false);
 		frame.setAlwaysOnTop(true);
 
@@ -150,7 +144,8 @@ public class SistemaDeOrcamentos {
 
 		// DEFININDO O PAINÉL DE DADOS DA JANELA INTERATIVA
 		JPanel telaInterativa = new JPanel();
-		telaInterativa.setLayout(null);
+		telaInterativa.setLayout(new BoxLayout(telaInterativa, BoxLayout.Y_AXIS));
+		telaInterativa.setAlignmentX(Component.CENTER_ALIGNMENT);
 		telaInterativa.setPreferredSize(new Dimension(600, 1000));
 
 		dadosNoPainel = new DadosNoPainel(posicionar);
@@ -265,10 +260,13 @@ public class SistemaDeOrcamentos {
 		botaoAddEtapa.setBounds(30, 122, 244, 65);
 		botaoAddEtapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
+
 				dadosNoPainel.addEtapas(telaInterativa);
 				frame.setAlwaysOnTop(true);
+				
 			}
 		});
 		botaoAddEtapa.setFont(new Font("Arial Black", Font.PLAIN, 15));
@@ -320,10 +318,11 @@ public class SistemaDeOrcamentos {
 		panel.add(btnConfigurar);
 
 		JButton btnLimpar = new JButton("LIMPAR");
+		btnLimpar.setBounds(301, 69, 588, 48);
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
-				
+
 				if (telaInterativa.getComponentCount() == 0) {
 					interacao.mostrarMensagemDeErro("NÃO HÁ NENHUM DADO NO PAINÉL PARA SER REMOVIDO!");
 				}
@@ -337,7 +336,6 @@ public class SistemaDeOrcamentos {
 			}
 		});
 		btnLimpar.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		btnLimpar.setBounds(301, 69, 588, 48);
 		panel.add(btnLimpar);
 
 		ImageIcon icon = new ImageIcon(SistemaDeOrcamentos.class.getResource("/resources/background.png"));
@@ -353,3 +351,4 @@ public class SistemaDeOrcamentos {
 		}
 	}
 }
+

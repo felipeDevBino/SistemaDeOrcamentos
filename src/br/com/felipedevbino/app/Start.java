@@ -5,16 +5,18 @@ import br.com.felipedevbino.instancias.InstanceManager;
 
 public class Start {
 
+	SistemaDeOrcamentos orcamento = InstanceManager.getSistemaDeOrcamentos();
 	/**
 	 * @felipeDevBino
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
 		InstanceManager.inicializaOrcamentos();
-		SistemaDeOrcamentos orcamento = InstanceManager.getSistemaDeOrcamentos();
-		SistemaDeOrcamentos.main(args);
+		
 		//TODO
+		
 	}
 
 }	
