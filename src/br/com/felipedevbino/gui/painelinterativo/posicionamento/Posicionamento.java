@@ -8,14 +8,14 @@ public class Posicionamento {
 	public final int alturaDoObjeto = 15;
 	private int alturaOriginalNoPainel = alturaNoPainel;
 
-	public void incrementarParaOProximoTitulo() {
-		//TODO
+	public void incrementarParaOProximoTexto(int adicao) {
+		if (adicao > 0) {
+			alturaNoPainel += adicao;
+		} else {
+			alturaNoPainel += 30;
+		}
 	}
-	
-	public void incrementarParaOProximoBotao() {
-		//TODO
-	}
-	
+
 	public void setValorOriginalAltura(int valor) {
 		alturaOriginalNoPainel = valor;
 	}
@@ -23,11 +23,10 @@ public class Posicionamento {
 	public int getValorOriginalAltura() {
 		return alturaOriginalNoPainel;
 	}
-	
+
 	public void restaurarValoresDeTopo() {
 		alturaOriginalNoPainel = 30;
 		alturaNoPainel = alturaOriginalNoPainel;
 	}
-	
-	
+
 }

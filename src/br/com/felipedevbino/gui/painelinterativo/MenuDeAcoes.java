@@ -45,10 +45,14 @@ public class MenuDeAcoes {
 
 		initialize();
 	}
-
 	public static int getAcao() {
 		return acao;
 	}
+	
+	public JFrame getJFrame() {
+		return frame;
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -88,7 +92,8 @@ public class MenuDeAcoes {
 		});
 		btnReposicionar.setBounds(10, 76, 185, 23);
 		frame.getContentPane().add(btnReposicionar);
-		frame.requestFocus();
+		frame.setAlwaysOnTop(true);
+		
 	}
 
 }

@@ -28,8 +28,9 @@ public class LogicaPainel {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuDeAcoes.main(null);
-
+				MenuDeAcoes menu = new MenuDeAcoes();
+				menu.getJFrame().setVisible(true);
+				
 				switch (MenuDeAcoes.getAcao()) {
 				case 1:
 					renomearNoPainel();
@@ -46,19 +47,19 @@ public class LogicaPainel {
 			}
 		};
 	}
-
-	public void removerNoPainel() {
-		System.out.println("removeu");
-	}
-
-	public void renomearNoPainel() {
+	
+	private void renomearNoPainel() {
 		System.out.println("renomeou");
 	}
 
-	public void reposicionarNoPainel() {
+	private void reposicionarNoPainel() {
 		System.out.println("reposicionou");
 	}
 
+	private void removerNoPainel() {
+		System.out.println("removeu");
+	}
+	
 	public List<String> getNota() {
 		return nota;
 	}

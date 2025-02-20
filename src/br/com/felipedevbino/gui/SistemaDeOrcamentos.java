@@ -260,13 +260,12 @@ public class SistemaDeOrcamentos {
 		botaoAddEtapa.setBounds(30, 122, 244, 65);
 		botaoAddEtapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
-
 				dadosNoPainel.addEtapas(telaInterativa);
 				frame.setAlwaysOnTop(true);
-				
+
 			}
 		});
 		botaoAddEtapa.setFont(new Font("Arial Black", Font.PLAIN, 15));
@@ -346,9 +345,11 @@ public class SistemaDeOrcamentos {
 	}
 
 	private void seDesejaEncerrar() {
+		
 		if (escolha.confirmarOuNegarDados("SIM", "NÃO", "VOCÊ REALMENTE DESEJA ENCERRAR O PROGRAMA?")) {
 			System.exit(0);
 		}
+		
 	}
-}
 
+}
