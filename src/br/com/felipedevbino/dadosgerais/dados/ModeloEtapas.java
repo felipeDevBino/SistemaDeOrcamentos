@@ -45,5 +45,13 @@ public class ModeloEtapas {
 		return etapas;
 	}
 
+	public BigDecimal getValorParteEtapa(String etapa, String parte) {
+		return etapas.get(etapa).get(parte);
+	}
+
+	public Map<String, BigDecimal> getPartesDeEtapa(String etapa) {
+		copiaPartes = etapas.get(etapa);
+		return copiaPartes;
+	}
 
 }

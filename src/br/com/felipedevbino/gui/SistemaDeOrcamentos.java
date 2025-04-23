@@ -22,7 +22,6 @@ import br.com.felipedevbino.dadosgerais.dados.ModeloPartes;
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.gui.painelinterativo.DadosNoPainel;
-import br.com.felipedevbino.gui.painelinterativo.posicionamento.Posicionamento;
 import br.com.felipedevbino.instancias.InstanceManager;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
 import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
@@ -48,7 +47,6 @@ public class SistemaDeOrcamentos {
 	private AdicionarParte adicionarParte;
 	private AdicionarEmpecilho adicionarEmpecilho;
 	private AdicionarMaterial adicionarMateriais;
-	private Posicionamento posicionar;
 
 	/**
 	 * Launch the application.
@@ -104,7 +102,6 @@ public class SistemaDeOrcamentos {
 		adicionarParte = new AdicionarParte();
 		adicionarEmpecilho = new AdicionarEmpecilho();
 		adicionarMateriais = new AdicionarMaterial();
-		posicionar = new Posicionamento();
 	}
 
 	public JFrame getJFrame() {
@@ -146,11 +143,9 @@ public class SistemaDeOrcamentos {
 		JPanel telaInterativa = new JPanel();
 		telaInterativa.setLayout(new BoxLayout(telaInterativa, BoxLayout.Y_AXIS));
 		telaInterativa.setAlignmentX(Component.CENTER_ALIGNMENT);
-		telaInterativa.setPreferredSize(new Dimension(600, 1000));
-
-		dadosNoPainel = new DadosNoPainel(posicionar);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		telaInterativa.setPreferredSize(new Dimension(600, Integer.MAX_VALUE));
+		
+		dadosNoPainel = new DadosNoPainel();
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		scrollPane.setViewportView(telaInterativa);
 
@@ -330,7 +325,6 @@ public class SistemaDeOrcamentos {
 				telaInterativa.revalidate();
 				telaInterativa.repaint();
 
-				posicionar.restaurarValoresDeTopo();
 				frame.setAlwaysOnTop(true);
 			}
 		});
