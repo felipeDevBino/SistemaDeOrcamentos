@@ -1,9 +1,13 @@
 package br.com.felipedevbino.gui.painelinterativo;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,28 +21,39 @@ import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
 
 public class DadosNoPainel {
 
+	private Map<Integer, Component> componentes;
 	private ModeloEtapas etapas = InstanceManager.getModeloEtapas();
 	private ModeloMateriais materiais = InstanceManager.getModeloMateriais();
 	private ModeloEmpecilhos empecilhos = InstanceManager.getModeloEmpecilhos();
+	private LogicaPainel logicaPainel;
+	private JPanel painelDeDados;
 	private BuscarEtapa buscarEtapas;
 	private BuscarParte buscarParte;
 
-	public DadosNoPainel() {
+	public DadosNoPainel(JPanel painelDeDados) {
+		
 		etapas = InstanceManager.getModeloEtapas();
 		materiais = InstanceManager.getModeloMateriais();
 		empecilhos = InstanceManager.getModeloEmpecilhos();
+		this.painelDeDados = painelDeDados;
 		buscarEtapas = new BuscarEtapa();
 		buscarParte = new BuscarParte();
+		componentes = new HashMap<>();
+		
+		//logicaPainel = new LogicaPainel(painelDeDados);
+		
 	}
+	
+	public void addEtapas() {
 
-	public void addEtapas(JPanel painelDeDados) {
+		verificarSeTituloExiste("ETAPAS");
 
-		verificarSeTituloExiste(painelDeDados, "ETAPAS");
-
-		criaEtapasVisiveis(painelDeDados);
+		inserirEtapasComponentes();
 
 		painelDeDados.revalidate();
 		painelDeDados.repaint();
+		
+		exibirComponentes();
 
 	}
 
@@ -50,7 +65,7 @@ public class DadosNoPainel {
 		// TODO
 	}
 
-	private JLabel obtemLabelFormatada(JPanel painelDeDados, String texto, int tamanho) {
+	private JLabel obtemLabelFormatada(String texto, int tamanho) {
 
 		JLabel label = new JLabel();
 
@@ -61,66 +76,91 @@ public class DadosNoPainel {
 		return label;
 
 	}
+	
+	public void exibirComponentes() {
+		
+		for(Component componente : componentes.values()) {
+			painelDeDados.add(componente);
+		}
+		
+	}
 
-	private void criaEtapasVisiveis(JPanel painelDeDados) {
+	private void inserirEtapasComponentes() {
 
+		int contador = 0;
 		int contadorDeEtapas = 1;
 		int contadorDePartes = 1;
 		
 		for (String etapaAtual : etapas.getEtapas().keySet()) {
 			
-			JLabel infoEtapas = obtemLabelFormatada(painelDeDados, ("ETAPA " + contadorDeEtapas), 25);
+			JLabel infoEtapas = obtemLabelFormatada( ("ETAPA " + contadorDeEtapas), 25);
 			infoEtapas.setAlignmentX(Component.CENTER_ALIGNMENT);
-			painelDeDados.add(infoEtapas);
+			componentes.put(contador, infoEtapas);
+			contador++;
 			
-			JButton etapa = capturarDadoComoBotao(painelDeDados, etapaAtual);
+			JButton etapa = capturarDadoComoBotao(etapaAtual);
 			etapa.setAlignmentX(Component.CENTER_ALIGNMENT);
-			painelDeDados.add(etapa);
-			
-			painelDeDados.add(Box.createVerticalStrut(20));
+			componentes.put(contador, etapa);
+			contador++;
 			
 			for (String parteAtual : etapas.getPartesDeEtapa(etapaAtual).keySet()) {
 
-				JLabel infoPartes = obtemLabelFormatada(painelDeDados, ("Parte " + contadorDePartes), 17);
+				componentes.put(contador, Box.createVerticalStrut(15));
+				contador++;
+				
+				JLabel infoPartes = obtemLabelFormatada(("Parte " + contadorDePartes), 17);
 				infoPartes.setAlignmentX(Component.CENTER_ALIGNMENT);
-				painelDeDados.add(infoPartes);
-
-				JButton parte = capturarDadoComoBotao(painelDeDados, parteAtual);
+				componentes.put(contador, infoPartes);
+				contador++;
+				
+				JButton parte = capturarDadoComoBotao(parteAtual);
 				parte.setAlignmentX(Component.CENTER_ALIGNMENT);
-				painelDeDados.add(parte);
-
-				JLabel infoValor = obtemLabelFormatada(painelDeDados, "Valor:", 17);
+				componentes.put(contador, parte);
+				contador++;
+				
+				JLabel infoValor = obtemLabelFormatada("Valor:", 17);
 				infoValor.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-				painelDeDados.add(infoValor);
-
-				JButton valor = capturarDadoComoBotao(painelDeDados,
-						(etapas.getValorParteEtapa(etapaAtual, parteAtual).toString() + "R$"));
+				componentes.put(contador, infoValor);
+				contador++;
+				
+				JButton valor = capturarDadoComoBotao((etapas.getValorParteEtapa(etapaAtual, parteAtual)
+						.toString() + "R$"));
 				valor.setAlignmentX(Component.CENTER_ALIGNMENT);
-				painelDeDados.add(valor);
-
-				painelDeDados.add(Box.createVerticalStrut(20));
-
+				componentes.put(contador, valor);
+				contador++;
+				
 				contadorDePartes++;
-
+				
 			}
+			
 			contadorDePartes = 1;
-
 			contadorDeEtapas++;
-
+			
+			componentes.put(contador, Box.createVerticalStrut(25));
+			contador++;
+			
 		}
+		
 
 	}
+	
+	private void inserirMateriaisComponentes() {
+		//TODO
+	}
+	
+	private void inserirEmpecilhosComponentes() {
+		//TODO
+	}
 
-	private void verificarSeTituloExiste(JPanel painelDeDados, String titulo) {
+	private void verificarSeTituloExiste(String titulo) {
 
 		JLabel label = new JLabel();
 		label.setText(titulo);
 
 		boolean seExisteTitulo = false;
-
-		for (Component componente : painelDeDados.getComponents()) {
-
+		
+		for(Component componente : componentes.values()) {
+			
 			if (componente instanceof JLabel) {
 
 				if (((JLabel) componente).getText().equals(label.getText())) {
@@ -130,37 +170,44 @@ public class DadosNoPainel {
 				}
 
 			}
-
+			
 		}
+
 		if (!seExisteTitulo && !etapas.getEtapas().isEmpty()) {
-
-			adicionarTitulo(painelDeDados, titulo);
-
+			adicionarTitulo(titulo);
 		}
 
 	}
 
-	private void adicionarTitulo(JPanel painelDeDados, String titulo) {
+	private void adicionarTitulo(String titulo) {
 
-		JLabel item = obtemLabelFormatada(painelDeDados, titulo, 30);
-		painelDeDados.add(item);
-		painelDeDados.add(Box.createVerticalStrut(20));
+		JLabel item = obtemLabelFormatada(titulo, 30);
+		componentes.put(0, item);
+		painelDeDados.add(componentes.get(0));
+		painelDeDados.add(Box.createVerticalStrut(30));
 
 	}
 
-	private JButton capturarDadoComoBotao(JPanel painelDeDados, String dado) {
+	private JButton capturarDadoComoBotao(String dado) {
 
 		JButton botao = new JButton();
 		botao.setFont(new Font("Arial", Font.PLAIN, 17));
 		botao.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botao.setText(dado);
 
-		LogicaPainel menu = new LogicaPainel(painelDeDados);
+		//LogicaPainel menu = new LogicaPainel(painelDeDados);
 
-		botao.addActionListener(menu.escolherAcao());
+		botao.addActionListener(e -> mostrarMenu(botao));
 
 		return botao;
 
+	}
+	
+	private void mostrarMenu(JButton botao) {
+
+		MenuDeAcoes menu = new MenuDeAcoes(painelDeDados, botao);
+		menu.getJFrame().setVisible(true);
+	
 	}
 
 }

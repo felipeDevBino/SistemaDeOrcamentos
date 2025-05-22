@@ -1,11 +1,9 @@
 package br.com.felipedevbino.gui.painelinterativo;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
+import javax.swing.JButton;
 
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
@@ -15,48 +13,43 @@ public class LogicaPainel {
 	private List<String> nota;
 	private Interacao interacao;
 	private BuscarEtapa buscarEtapas;
-	private JPanel painelDeDados;
 
-	public LogicaPainel(JPanel painelDeDados) {
+	public LogicaPainel() {
 		nota = new ArrayList<>();
 		interacao = new Interacao();
 		buscarEtapas = new BuscarEtapa();
-		this.painelDeDados = painelDeDados;
-	}
-
-	public ActionListener escolherAcao() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MenuDeAcoes menu = new MenuDeAcoes();
-				menu.getJFrame().setVisible(true);
-				
-				switch (MenuDeAcoes.getAcao()) {
-				case 1:
-					renomearNoPainel();
-					break;
-				case 2:
-					reposicionarNoPainel();
-					break;
-				case 3:
-					removerNoPainel();
-					break;
-				default:
-					break;
-				}
-			}
-		};
 	}
 	
-	private void renomearNoPainel() {
-		System.out.println("renomeou");
+	protected void renomearNoPainel(JButton dado) {
+		String valor = "";
+		
+		do {
+			
+			valor = interacao.inserirDadoDeTexto("Insira o novo nome/valor:");
+			
+			if(!valor.isBlank()) {
+			
+				dado.setText(valor);
+			
+			}else {
+			
+				interacao.mostrarMensagemDeErro("ERRO! INSIRA UM DADO DE TEXTO VÁLIDO.");
+
+			}
+			
+		} while(valor.isBlank());
+		
 	}
 
-	private void reposicionarNoPainel() {
-		System.out.println("reposicionou");
+	protected void reposicionarNoPainel(JButton dado) {
+		//TODO
 	}
 
-	private void removerNoPainel() {
+	private void moverComponente() {
+		//TODO
+	}
+	
+	protected void removerNoPainel() {
 		System.out.println("removeu");
 	}
 	

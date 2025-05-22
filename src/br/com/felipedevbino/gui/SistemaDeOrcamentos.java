@@ -47,7 +47,8 @@ public class SistemaDeOrcamentos {
 	private AdicionarParte adicionarParte;
 	private AdicionarEmpecilho adicionarEmpecilho;
 	private AdicionarMaterial adicionarMateriais;
-
+	private JPanel telaInterativa;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -140,12 +141,12 @@ public class SistemaDeOrcamentos {
 		panel.add(scrollPane);
 
 		// DEFININDO O PAINÉL DE DADOS DA JANELA INTERATIVA
-		JPanel telaInterativa = new JPanel();
+		telaInterativa = new JPanel();
 		telaInterativa.setLayout(new BoxLayout(telaInterativa, BoxLayout.Y_AXIS));
 		telaInterativa.setAlignmentX(Component.CENTER_ALIGNMENT);
 		telaInterativa.setPreferredSize(new Dimension(600, Integer.MAX_VALUE));
 		
-		dadosNoPainel = new DadosNoPainel();
+		dadosNoPainel = new DadosNoPainel(telaInterativa);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		scrollPane.setViewportView(telaInterativa);
 
@@ -165,17 +166,19 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 
-				if (telaInterativa.getComponentCount() == 0) {
+				telaInterativa.removeAll();
+				
+				//if (telaInterativa.getComponentCount() == 0) {
 					if (!buscarEtapas.seNaoHaEtapas() || !buscarMateriais.seNaoHaMateriais()
 							|| !buscarEmpecilho.seNaoHaEmpecilhos()) {
-						dadosNoPainel.addEtapas(telaInterativa);
+						dadosNoPainel.addEtapas();
 						dadosNoPainel.addMateriais(telaInterativa);
 						dadosNoPainel.addEmpecilhos(telaInterativa);
 					} else {
 						interacao.mostrarMensagemDeErro(
-								"VOCÊ AINDA NÃO INSERIU NENHUM DADO PARA QUE POSSA SER EXIBIDO NO PAINÉL!");
+								"VOCÊ AINDA NÃO INSERIU NENHUM DADO PARA QUE POSSA SER EXIBIDO NO PAINEL!");
 					}
-				}
+				//}
 
 				telaInterativa.revalidate();
 				telaInterativa.repaint();
@@ -218,7 +221,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarMateriais.adicionarMaterialAoOrcamento();
-				dadosNoPainel.addMateriais(telaInterativa);
+				botaoAtualizar.doClick();
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -231,7 +234,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
-				dadosNoPainel.addEmpecilhos(telaInterativa);
+				botaoAtualizar.doClick();
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -244,7 +247,7 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarParte.adicionarParteAQualquerEtapa();
-				// TODO -> ATUALIZA A ETAPA COM A PARTE
+				botaoAtualizar.doClick();
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -258,7 +261,7 @@ public class SistemaDeOrcamentos {
 
 				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
-				dadosNoPainel.addEtapas(telaInterativa);
+				botaoAtualizar.doClick();
 				frame.setAlwaysOnTop(true);
 
 			}
@@ -318,7 +321,7 @@ public class SistemaDeOrcamentos {
 				frame.setAlwaysOnTop(false);
 
 				if (telaInterativa.getComponentCount() == 0) {
-					interacao.mostrarMensagemDeErro("NÃO HÁ NENHUM DADO NO PAINÉL PARA SER REMOVIDO!");
+					interacao.mostrarMensagemDeErro("NÃO HÁ NENHUM DADO NO PAINEL PARA SER REMOVIDO!");
 				}
 
 				telaInterativa.removeAll();
@@ -344,6 +347,10 @@ public class SistemaDeOrcamentos {
 			System.exit(0);
 		}
 		
+	}
+	
+	public JPanel getTelaInterativa() {
+		return telaInterativa;
 	}
 
 }
