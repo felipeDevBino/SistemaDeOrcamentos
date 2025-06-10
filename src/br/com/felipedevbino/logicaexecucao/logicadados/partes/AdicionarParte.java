@@ -38,15 +38,15 @@ public class AdicionarParte {
 	 * prematuramente, solicitando depois que o usuário identifique a etapa a qual
 	 * ele deseja alocar a parte criada.
 	 */
-	public void adicionarParteAQualquerEtapa() {
+	public boolean adicionarParteAQualquerEtapa() {
 		if (seNaoHaEtapas()) {
-			return;
+			return false;
 		}
 
 		criarParteEValor();
 
 		if (seEscolheuSair) {
-			return;
+			return false;
 		}
 
 		buscarEtapa.mostrarTodasAsEtapas();
@@ -57,6 +57,8 @@ public class AdicionarParte {
 		interacao.mostrarMensagemDeInformacao("PARTES ADICIONADAS NA ETAPA " + etapaEncontrada);
 
 		buscarEtapa.mostrarEtapasComPartes();
+		
+		return true;
 	}
 
 	/**

@@ -40,7 +40,6 @@ public class SistemaDeOrcamentos {
 	private DadosNoPainel dadosNoPainel;
 	private CaixaDeEscolha escolha;
 	private BuscarEtapa buscarEtapas;
-	private BuscarParte buscarPartes;
 	private BuscarEmpecilho buscarEmpecilho;
 	private BuscarMaterial buscarMateriais;
 	private AdicionarEtapa adicionarEtapa;
@@ -48,7 +47,7 @@ public class SistemaDeOrcamentos {
 	private AdicionarEmpecilho adicionarEmpecilho;
 	private AdicionarMaterial adicionarMateriais;
 	private JPanel telaInterativa;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -96,7 +95,6 @@ public class SistemaDeOrcamentos {
 		interacao = new Interacao();
 		escolha = new CaixaDeEscolha();
 		buscarEtapas = new BuscarEtapa();
-		buscarPartes = new BuscarParte();
 		buscarEmpecilho = new BuscarEmpecilho();
 		buscarMateriais = new BuscarMaterial();
 		adicionarEtapa = new AdicionarEtapa();
@@ -145,7 +143,7 @@ public class SistemaDeOrcamentos {
 		telaInterativa.setLayout(new BoxLayout(telaInterativa, BoxLayout.Y_AXIS));
 		telaInterativa.setAlignmentX(Component.CENTER_ALIGNMENT);
 		telaInterativa.setPreferredSize(new Dimension(600, Integer.MAX_VALUE));
-		
+
 		dadosNoPainel = new DadosNoPainel(telaInterativa);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		scrollPane.setViewportView(telaInterativa);
@@ -165,20 +163,16 @@ public class SistemaDeOrcamentos {
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
-
-				telaInterativa.removeAll();
 				
-				//if (telaInterativa.getComponentCount() == 0) {
-					if (!buscarEtapas.seNaoHaEtapas() || !buscarMateriais.seNaoHaMateriais()
-							|| !buscarEmpecilho.seNaoHaEmpecilhos()) {
-						dadosNoPainel.addEtapas();
-						dadosNoPainel.addMateriais(telaInterativa);
-						dadosNoPainel.addEmpecilhos(telaInterativa);
-					} else {
-						interacao.mostrarMensagemDeErro(
-								"VOCÊ AINDA NÃO INSERIU NENHUM DADO PARA QUE POSSA SER EXIBIDO NO PAINEL!");
-					}
-				//}
+				if (!buscarEtapas.seNaoHaEtapas() || !buscarMateriais.seNaoHaMateriais()
+						|| !buscarEmpecilho.seNaoHaEmpecilhos()) {
+					dadosNoPainel.addEtapas();
+					dadosNoPainel.addMateriais();
+					dadosNoPainel.addEmpecilhos();
+				} else {
+					interacao.mostrarMensagemDeErro(
+							"VOCÊ AINDA NÃO INSERIU NENHUM DADO PARA QUE POSSA SER EXIBIDO NO PAINEL!");
+				}
 
 				telaInterativa.revalidate();
 				telaInterativa.repaint();
@@ -221,7 +215,11 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarMateriais.adicionarMaterialAoOrcamento();
-				botaoAtualizar.doClick();
+
+				if (!buscarMateriais.seNaoHaMateriais()) {
+					botaoAtualizar.doClick();
+				}
+
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -234,7 +232,11 @@ public class SistemaDeOrcamentos {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
 				adicionarEmpecilho.adicionarEmpecilhoAoOrcamento();
-				botaoAtualizar.doClick();
+				
+				if(!buscarEmpecilho.seNaoHaEmpecilhos()) {
+					botaoAtualizar.doClick();
+				}
+				
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -246,8 +248,11 @@ public class SistemaDeOrcamentos {
 		botaoAddParte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setAlwaysOnTop(false);
-				adicionarParte.adicionarParteAQualquerEtapa();
-				botaoAtualizar.doClick();
+				
+				if(adicionarParte.adicionarParteAQualquerEtapa()) {
+					botaoAtualizar.doClick();
+				}
+				
 				frame.setAlwaysOnTop(true);
 			}
 		});
@@ -258,12 +263,14 @@ public class SistemaDeOrcamentos {
 		botaoAddEtapa.setBounds(30, 122, 244, 65);
 		botaoAddEtapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				frame.setAlwaysOnTop(false);
 				adicionarEtapa.adicionarEtapaAoOrcamento();
-				botaoAtualizar.doClick();
-				frame.setAlwaysOnTop(true);
 
+				if (!buscarEtapas.seNaoHaEtapas()) {
+					botaoAtualizar.doClick();
+				}
+
+				frame.setAlwaysOnTop(true);
 			}
 		});
 		botaoAddEtapa.setFont(new Font("Arial Black", Font.PLAIN, 15));
@@ -342,13 +349,13 @@ public class SistemaDeOrcamentos {
 	}
 
 	private void seDesejaEncerrar() {
-		
+
 		if (escolha.confirmarOuNegarDados("SIM", "NÃO", "VOCÊ REALMENTE DESEJA ENCERRAR O PROGRAMA?")) {
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	public JPanel getTelaInterativa() {
 		return telaInterativa;
 	}
