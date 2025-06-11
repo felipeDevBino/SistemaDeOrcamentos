@@ -1,11 +1,11 @@
-package br.com.felipedevbino.logicaexecucao.logicadados.partes;
+package br.com.felipedevbino.logicadados.partes;
 
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
 import br.com.felipedevbino.dadosgerais.dados.ModeloPartes;
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.instancias.InstanceManager;
-import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
+import br.com.felipedevbino.logicadados.etapas.BuscarEtapa;
 
 public class AdicionarParte {
 

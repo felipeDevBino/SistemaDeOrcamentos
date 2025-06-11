@@ -1,4 +1,4 @@
-package br.com.felipedevbino.logicaexecucao.logicadados.partes;
+package br.com.felipedevbino.logicadados.partes;
 
 import java.math.BigDecimal;
 import java.util.Map;

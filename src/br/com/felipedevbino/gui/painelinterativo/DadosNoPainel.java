@@ -22,8 +22,8 @@ import br.com.felipedevbino.dadosgerais.dados.ModeloEmpecilhos;
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
 import br.com.felipedevbino.dadosgerais.dados.ModeloMateriais;
 import br.com.felipedevbino.instancias.InstanceManager;
-import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
-import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
+import br.com.felipedevbino.logicadados.etapas.BuscarEtapa;
+import br.com.felipedevbino.logicadados.partes.BuscarParte;
 
 public class DadosNoPainel {
 

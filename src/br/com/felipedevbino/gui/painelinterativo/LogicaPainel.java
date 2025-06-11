@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JButton;
 
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
-import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
+import br.com.felipedevbino.logicadados.etapas.BuscarEtapa;
 
 public class LogicaPainel {
 
@@ -20,6 +20,7 @@ public class LogicaPainel {
 		buscarEtapas = new BuscarEtapa();
 	}
 	
+	//UTILIZAR CRITÉRIO DE VERIFICAÇÃO SOBRE (NOME / VALOR)
 	protected void renomearNoPainel(JButton dado) {
 		String valor = "";
 		

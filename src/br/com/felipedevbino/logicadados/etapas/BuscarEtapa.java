@@ -1,4 +1,4 @@
-package br.com.felipedevbino.logicaexecucao.logicadados.etapas;
+package br.com.felipedevbino.logicadados.etapas;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.instancias.InstanceManager;
-import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
+import br.com.felipedevbino.logicadados.partes.BuscarParte;
 
 public class BuscarEtapa {
 

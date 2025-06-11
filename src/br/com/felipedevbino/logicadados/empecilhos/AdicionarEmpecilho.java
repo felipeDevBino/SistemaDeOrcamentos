@@ -1,4 +1,4 @@
-package br.com.felipedevbino.logicaexecucao.logicadados.empecilhos;
+package br.com.felipedevbino.logicadados.empecilhos;
 
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;

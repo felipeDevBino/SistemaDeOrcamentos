@@ -1,4 +1,4 @@
-package br.com.felipedevbino.logicaexecucao.logicadados.materiais;
+package br.com.felipedevbino.logicadados.materiais;
 
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;

@@ -23,14 +23,14 @@ import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.gui.painelinterativo.DadosNoPainel;
 import br.com.felipedevbino.instancias.InstanceManager;
-import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.AdicionarEmpecilho;
-import br.com.felipedevbino.logicaexecucao.logicadados.empecilhos.BuscarEmpecilho;
-import br.com.felipedevbino.logicaexecucao.logicadados.etapas.AdicionarEtapa;
-import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
-import br.com.felipedevbino.logicaexecucao.logicadados.materiais.AdicionarMaterial;
-import br.com.felipedevbino.logicaexecucao.logicadados.materiais.BuscarMaterial;
-import br.com.felipedevbino.logicaexecucao.logicadados.partes.AdicionarParte;
-import br.com.felipedevbino.logicaexecucao.logicadados.partes.BuscarParte;
+import br.com.felipedevbino.logicadados.empecilhos.AdicionarEmpecilho;
+import br.com.felipedevbino.logicadados.empecilhos.BuscarEmpecilho;
+import br.com.felipedevbino.logicadados.etapas.AdicionarEtapa;
+import br.com.felipedevbino.logicadados.etapas.BuscarEtapa;
+import br.com.felipedevbino.logicadados.materiais.AdicionarMaterial;
+import br.com.felipedevbino.logicadados.materiais.BuscarMaterial;
+import br.com.felipedevbino.logicadados.partes.AdicionarParte;
+import br.com.felipedevbino.logicadados.partes.BuscarParte;
 
 public class SistemaDeOrcamentos {
 
