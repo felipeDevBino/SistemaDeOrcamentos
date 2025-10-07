@@ -1,11 +1,11 @@
-package br.com.felipedevbino.logicadados.partes;
+package br.com.felipedevbino.logicaexecucao.logicadados.partes;
 
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
 import br.com.felipedevbino.dadosgerais.dados.ModeloPartes;
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
 import br.com.felipedevbino.gui.funcoesgui.Interacao;
 import br.com.felipedevbino.instancias.InstanceManager;
-import br.com.felipedevbino.logicadados.etapas.BuscarEtapa;
+import br.com.felipedevbino.logicaexecucao.logicadados.etapas.BuscarEtapa;
 
 public class AdicionarParte {
 
@@ -38,15 +38,15 @@ public class AdicionarParte {
 	 * prematuramente, solicitando depois que o usuário identifique a etapa a qual
 	 * ele deseja alocar a parte criada.
 	 */
-	public boolean adicionarParteAQualquerEtapa() {
+	public void adicionarParteAQualquerEtapa() {
 		if (seNaoHaEtapas()) {
-			return false;
+			return;
 		}
 
 		criarParteEValor();
 
 		if (seEscolheuSair) {
-			return false;
+			return;
 		}
 
 		buscarEtapa.mostrarTodasAsEtapas();
@@ -57,8 +57,6 @@ public class AdicionarParte {
 		interacao.mostrarMensagemDeInformacao("PARTES ADICIONADAS NA ETAPA " + etapaEncontrada);
 
 		buscarEtapa.mostrarEtapasComPartes();
-
-		return true;
 	}
 
 	/**
@@ -93,37 +91,32 @@ public class AdicionarParte {
 			if (seEscolheuSair) {
 				return;
 			}
-		} while (!parteValida);
+			if (seAParteEstaVazia()) {
+				continue;
+			}
 
-		// CANCELAR EXECUÇÃO COMPLETA CASO HAJA MAIS DE UMA PARTE A SER ADICIONADA
-
-		do {
-			valorValido = false;
-			
-			inserirValor();
-			verificarSeOValorEValido();
-			if (!valorValido) {
-				if (escolha.confirmarOuNegarDados("SIM", "NÃO",
-						"O VALOR NÃO FOI INSERIDO, DESEJA CANCELAR A EXECUÇÃO?")) {
-					seEscolheuSair = true;
+			do {
+				valorValido = false;
+				inserirValor();
+				verificarSeOValorEValido();
+				if (!valorValido) {
+					if (escolha.confirmarOuNegarDados("SIM", "NÃO",
+							"O VALOR NÃO FOI INSERIDO, DESEJA CANCELAR A EXECUÇÃO?")) {
+						seEscolheuSair = true;
+						return;
+					}
 				}
-			}
+			} while (!valorValido);
+		} while (!parteValida || !valorValido);
 
-			if (seEscolheuSair) {
-				return;
-			}
-
-		} while (!valorValido);
-
-		if (!seEscolheuSair) {
-			partes.inserirParte(parte, valor);
-		}
+		partes.inserirParte(parte, valor);
 
 	}
 
 	private boolean seEscolheCancelarExecucao(String mensagem) {
 		if (parte == null || parte.isEmpty()) {
-			return escolha.confirmarOuNegarDados("SIM", "NÃO", mensagem);
+			seEscolheuSair = escolha.confirmarOuNegarDados("SIM", "NÃO", mensagem);
+			return seEscolheuSair;
 		}
 		parteValida = true;
 		return false;
@@ -134,10 +127,8 @@ public class AdicionarParte {
 	}
 
 	private void verificarSeOValorEValido() {
-		if (valor == null && valor != 0) {
-			valorValido = false;
-		} else {
-			valorValido = true;
+		if (valor == null) {
+			definirValorComoInvalido();
 		}
 	}
 
@@ -170,7 +161,6 @@ public class AdicionarParte {
 				if (!valorValido) {
 					if (escolha.confirmarOuNegarDados("SIM", "NÃO",
 							"O VALOR NÃO FOI INSERIDO, DESEJA CANCELAR A EXECUÇÃO?")) {
-						seEscolheuSair = true;
 						return;
 					}
 				}
@@ -182,19 +172,21 @@ public class AdicionarParte {
 
 	private void inserirParte(String texto) {
 		parte = interacao.inserirDadoDeTexto(texto);
-		if (seEscolheCancelarExecucao("A PARTE ESTÁ VAZIA, DESEJA CANCELAR A EXECUÇÃO?")) {
-			seEscolheuSair = true;
-			return;
-		}
+		seEscolheCancelarExecucao("A PARTE ESTÁ VAZIA, DESEJA CANCELAR A EXECUÇÃO?");
 	}
 
 	private void inserirValor() {
 		try {
 			valor = interacao.inserirDadoNumericoFlutuante("INSIRA O VALOR DA PARTE");
 		} catch (Exception e) {
-			valorValido = false;
+			definirValorComoInvalido();
 			return;
 		}
+		valorValido = true;
+	}
+
+	private void definirValorComoInvalido() {
+		valorValido = false;
 	}
 
 	private void encontrarEDefinirEtapa() {

@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import br.com.felipedevbino.arquivos.Arquivo;
 import br.com.felipedevbino.dadosgerais.dados.ModeloEtapas;
 import br.com.felipedevbino.dadosgerais.dados.ModeloPartes;
 import br.com.felipedevbino.gui.funcoesgui.CaixaDeEscolha;
